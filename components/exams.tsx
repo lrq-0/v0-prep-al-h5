@@ -45,7 +45,7 @@ export function Exams({ initialSection }: ExamsProps) {
       id: 1,
       title: "电商运营能力评估",
       description: "测试您的电商平台运营和店铺管理能力",
-      image: "/placeholder-fe69z.png",
+      image: "/ecommerce-assessment.jpg", // Updated from placeholder to proper e-commerce assessment image
       count: "5套试卷",
       type: "mock",
       featured: true,

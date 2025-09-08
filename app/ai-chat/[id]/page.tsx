@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import { Send, ArrowLeft, MoreVertical, Download, Trash2, Share } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 // 课程助手聊天页面
 export default function AIChatPage({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [message, setMessage] = useState("")
   const [chatHistory, setChatHistory] = useState<any[]>([])
   const chatContainerRef = useRef<HTMLDivElement>(null)
@@ -120,10 +121,15 @@ export default function AIChatPage({ params }: { params: { id: string } }) {
     }
   }
 
-  // 返回按钮处理
   const handleBack = () => {
-    // 返回到课程详情页
-    router.push(`/courses/${params.id}`)
+    const returnUrl = searchParams.get("returnUrl")
+    if (returnUrl) {
+      // 如果有返回URL参数，使用该URL
+      router.push(returnUrl)
+    } else {
+      // 否则返回到主页
+      router.push("/")
+    }
   }
 
   // 格式化时间
@@ -133,16 +139,16 @@ export default function AIChatPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <div className="flex flex-col h-screen bg-gray-950 text-white">
+    <div className="flex flex-col h-screen bg-background text-foreground">
       {/* 头部 */}
-      <header className="border-b border-gray-800 bg-gray-900 py-3 px-4">
+      <header className="border-b border-border bg-card py-3 px-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Button
               variant="ghost"
               size="icon"
               onClick={handleBack}
-              className="mr-2 text-gray-400 hover:text-white hover:bg-gray-800"
+              className="mr-2 text-muted-foreground hover:text-foreground hover:bg-muted"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -156,29 +162,33 @@ export default function AIChatPage({ params }: { params: { id: string } }) {
                 />
               </Avatar>
               <div>
-                <h1 className="text-sm font-medium">{course.assistantName}</h1>
-                <p className="text-xs text-gray-400">课程助手</p>
+                <h1 className="text-sm font-medium text-foreground">{course.assistantName}</h1>
+                <p className="text-xs text-muted-foreground">课程助手</p>
               </div>
             </div>
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white hover:bg-gray-800">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-muted-foreground hover:text-foreground hover:bg-muted"
+              >
                 <MoreVertical className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-gray-900 border-gray-800 text-white">
-              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-gray-800">
+            <DropdownMenuContent align="end" className="bg-card border-border text-foreground">
+              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-muted">
                 <Download className="h-4 w-4 mr-2" />
                 <span>导出聊天记录</span>
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-gray-800">
+              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-muted">
                 <Trash2 className="h-4 w-4 mr-2" />
                 <span>清空聊天</span>
               </DropdownMenuItem>
-              <Separator className="bg-gray-800" />
-              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-gray-800">
+              <Separator className="bg-border" />
+              <DropdownMenuItem className="flex items-center cursor-pointer hover:bg-muted">
                 <Share className="h-4 w-4 mr-2" />
                 <span>分享助手</span>
               </DropdownMenuItem>
@@ -194,7 +204,7 @@ export default function AIChatPage({ params }: { params: { id: string } }) {
             <div
               className={cn(
                 "max-w-[80%] rounded-lg p-3",
-                chat.role === "user" ? "bg-blue-600 text-white" : "bg-gray-800 text-white",
+                chat.role === "user" ? "bg-blue-600 text-white" : "bg-muted text-foreground",
               )}
             >
               <div className="flex flex-col">
@@ -207,14 +217,14 @@ export default function AIChatPage({ params }: { params: { id: string } }) {
       </div>
 
       {/* 输入框 */}
-      <div className="border-t border-gray-800 bg-gray-900 p-4">
+      <div className="border-t border-border bg-card p-4">
         <div className="flex items-center">
           <Input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="输入问题..."
-            className="flex-1 bg-gray-800 border-gray-700 focus-visible:ring-blue-500 text-white"
+            className="flex-1 bg-background border-border focus-visible:ring-blue-500 text-foreground placeholder:text-muted-foreground"
           />
           <Button
             onClick={sendMessage}

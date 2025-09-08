@@ -48,39 +48,39 @@ export default function ExamResult({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white flex flex-col">
-        <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-          <Link href={`/exams/${params.id}/intro`} className="flex items-center text-gray-300">
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+          <Link href={`/exams/${params.id}/intro`} className="flex items-center text-muted-foreground">
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span>返回</span>
           </Link>
-          <h1 className="flex-1 text-center text-lg font-semibold text-white">考试结果</h1>
+          <h1 className="flex-1 text-center text-lg font-semibold text-foreground">考试结果</h1>
         </div>
 
         <div className="flex-1 flex flex-col items-center justify-center p-4">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-400">正在计算考试结果...</p>
+          <p className="text-muted-foreground">正在计算考试结果...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href={`/exams/${params.id}/intro`} className="flex items-center text-gray-300">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <Link href={`/exams/${params.id}/intro`} className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">考试结果</h1>
-        <button className="text-gray-300">
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">考试结果</h1>
+        <button className="text-muted-foreground">
           <Share2 className="h-5 w-5" />
         </button>
       </div>
 
       <div className="p-4 pb-24">
         {/* 成绩展示 */}
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-6 mb-6 text-center">
+        <div className="bg-card border border-border rounded-lg p-6 mb-6 text-center">
           <div className="mb-4">
             {result.passed ? (
               <div className="w-20 h-20 rounded-full bg-green-900/30 flex items-center justify-center mx-auto">
@@ -101,53 +101,53 @@ export default function ExamResult({ params }: { params: { id: string } }) {
             )}
           </div>
 
-          <h2 className="text-2xl font-bold text-white mb-1">
+          <h2 className="text-2xl font-bold text-foreground mb-1">
             {result.score}
-            <span className="text-gray-400 text-lg">/100</span>
+            <span className="text-muted-foreground text-lg">/100</span>
           </h2>
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-muted-foreground mb-4">
             {result.passed ? "恭喜您通过了考试！" : "很遗憾，您未通过考试。"}
           </p>
 
           <div className="flex justify-between text-sm mb-2">
-            <span className="text-gray-400">及格分数线</span>
-            <span className="text-white">{result.passingScore}分</span>
+            <span className="text-muted-foreground">及格分数线</span>
+            <span className="text-foreground">{result.passingScore}分</span>
           </div>
           <Progress value={result.score} className="h-2 mb-4" />
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="bg-gray-800 rounded-lg p-3">
-              <p className="text-gray-400 text-xs mb-1">答题数</p>
-              <p className="text-white font-medium">
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs mb-1">答题数</p>
+              <p className="text-foreground font-medium">
                 {result.correctQuestions + result.incorrectQuestions}/{result.totalQuestions}
               </p>
             </div>
-            <div className="bg-gray-800 rounded-lg p-3">
-              <p className="text-gray-400 text-xs mb-1">正确率</p>
-              <p className="text-white font-medium">
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs mb-1">正确率</p>
+              <p className="text-foreground font-medium">
                 {Math.round((result.correctQuestions / result.totalQuestions) * 100)}%
               </p>
             </div>
-            <div className="bg-gray-800 rounded-lg p-3">
-              <p className="text-gray-400 text-xs mb-1">用时</p>
-              <p className="text-white font-medium">{result.duration}</p>
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs mb-1">用时</p>
+              <p className="text-foreground font-medium">{result.duration}</p>
             </div>
-            <div className="bg-gray-800 rounded-lg p-3">
-              <p className="text-gray-400 text-xs mb-1">排名</p>
-              <p className="text-white font-medium">前{Math.floor(Math.random() * 20) + 10}%</p>
+            <div className="bg-muted rounded-lg p-3">
+              <p className="text-muted-foreground text-xs mb-1">排名</p>
+              <p className="text-foreground font-medium">前{Math.floor(Math.random() * 20) + 10}%</p>
             </div>
           </div>
         </div>
 
         {/* 分类得分 */}
-        <div className="bg-gray-900 border border-gray-800 rounded-lg p-4 mb-6">
-          <h3 className="text-white font-medium mb-4">分类得分</h3>
+        <div className="bg-card border border-border rounded-lg p-4 mb-6">
+          <h3 className="text-foreground font-medium mb-4">分类得分</h3>
           <div className="space-y-4">
             {result.categoryScores.map((category, index) => (
               <div key={index}>
                 <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-300">{category.name}</span>
-                  <span className="text-white">
+                  <span className="text-muted-foreground">{category.name}</span>
+                  <span className="text-foreground">
                     {category.score}/{category.total}
                   </span>
                 </div>
@@ -159,24 +159,24 @@ export default function ExamResult({ params }: { params: { id: string } }) {
 
         {/* 证书信息 */}
         {result.passed && (
-          <div className="bg-gray-900 border border-gray-800 rounded-lg p-4 mb-6">
-            <h3 className="text-white font-medium mb-4">证书信息</h3>
+          <div className="bg-card border border-border rounded-lg p-4 mb-6">
+            <h3 className="text-foreground font-medium mb-4">证书信息</h3>
             <div className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-gray-400">证书编号</span>
-                <span className="text-white">{result.certificate.id}</span>
+                <span className="text-muted-foreground">证书编号</span>
+                <span className="text-foreground">{result.certificate.id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">证书名称</span>
-                <span className="text-white">{result.certificate.name}</span>
+                <span className="text-muted-foreground">证书名称</span>
+                <span className="text-foreground">{result.certificate.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">发证日期</span>
-                <span className="text-white">{result.certificate.date}</span>
+                <span className="text-muted-foreground">发证日期</span>
+                <span className="text-foreground">{result.certificate.date}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">有效期至</span>
-                <span className="text-white">{result.certificate.validUntil}</span>
+                <span className="text-muted-foreground">有效期至</span>
+                <span className="text-foreground">{result.certificate.validUntil}</span>
               </div>
             </div>
           </div>
@@ -194,10 +194,10 @@ export default function ExamResult({ params }: { params: { id: string } }) {
       </div>
 
       {/* 底部按钮 */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gray-900/95 backdrop-blur-md border-t border-gray-800">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-card/95 backdrop-blur-md border-t border-border">
         <div className="grid grid-cols-2 gap-3">
           {result.passed && (
-            <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20">
+            <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent">
               <Download className="h-4 w-4 mr-2" />
               下载证书
             </Button>

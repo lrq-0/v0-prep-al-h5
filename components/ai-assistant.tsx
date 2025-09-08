@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import {
   Search,
@@ -27,10 +27,16 @@ import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useRouter } from "next/navigation"
 
-export function AiAssistant() {
+export function AiAssistant({ initialSection }: { initialSection?: string }) {
   const [searchQuery, setSearchQuery] = useState("")
-  const [activeSection, setActiveSection] = useState("chatModels") // Added state for active sidebar section
+  const [activeSection, setActiveSection] = useState(initialSection || "chatModels") // Use initialSection prop
   const router = useRouter()
+
+  useEffect(() => {
+    if (initialSection) {
+      setActiveSection(initialSection)
+    }
+  }, [initialSection])
 
   const sidebarItems = [
     {
@@ -279,29 +285,29 @@ export function AiAssistant() {
               filteredChatModels.map((model) => (
                 <Card
                   key={model.id}
-                  className="flex items-center p-3 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
+                  className="flex items-center p-3 bg-card border rounded-lg cursor-pointer hover:bg-accent transition-colors"
                   onClick={() =>
                     router.push(
-                      `/ai-chat/${model.id === 1 ? "deepseek" : model.id === 2 ? "chatgpt" : model.id === 3 ? "doubao" : "kimi"}`,
+                      `/ai-chat/${model.id === 1 ? "deepseek" : model.id === 2 ? "chatgpt" : model.id === 3 ? "doubao" : "kimi"}?returnUrl=${encodeURIComponent("/?tab=ai-assistant&section=chatModels")}`,
                     )
                   }
                 >
                   <div className="flex-shrink-0 mr-3">
-                    <GripVertical className="h-5 w-5 text-gray-500 cursor-grab" />
+                    <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
                   </div>
                   <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
                     <Image src={model.icon || "/placeholder.svg"} alt={model.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center mb-1">
-                      <h3 className="text-white font-medium truncate">{model.name}</h3>
+                      <h3 className="text-foreground font-medium truncate">{model.name}</h3>
                     </div>
-                    <p className="text-sm text-gray-400 truncate">{model.description}</p>
+                    <p className="text-sm text-muted-foreground truncate">{model.description}</p>
                   </div>
                 </Card>
               ))
             ) : (
-              <div className="text-center py-4 text-gray-500">没有找到匹配的对话模型</div>
+              <div className="text-center py-4 text-muted-foreground">没有找到匹配的对话模型</div>
             )}
           </div>
         )
@@ -313,29 +319,29 @@ export function AiAssistant() {
               filteredMediaModels.map((model) => (
                 <Card
                   key={model.id}
-                  className="flex items-center p-3 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
+                  className="flex items-center p-3 bg-card border rounded-lg cursor-pointer hover:bg-accent transition-colors"
                   onClick={() =>
                     router.push(
-                      `/ai-chat/${model.id === 1 ? "copywriter" : model.id === 2 ? "image-gen" : "script-gen"}`,
+                      `/ai-chat/${model.id === 1 ? "copywriter" : model.id === 2 ? "image-gen" : "script-gen"}?returnUrl=${encodeURIComponent("/?tab=ai-assistant&section=mediaModels")}`,
                     )
                   }
                 >
                   <div className="flex-shrink-0 mr-3">
-                    <GripVertical className="h-5 w-5 text-gray-500 cursor-grab" />
+                    <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
                   </div>
                   <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
                     <Image src={model.icon || "/placeholder.svg"} alt={model.name} fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center mb-1">
-                      <h3 className="text-white font-medium truncate">{model.name}</h3>
+                      <h3 className="text-foreground font-medium truncate">{model.name}</h3>
                     </div>
-                    <p className="text-sm text-gray-400 truncate">{model.description}</p>
+                    <p className="text-sm text-muted-foreground truncate">{model.description}</p>
                   </div>
                 </Card>
               ))
             ) : (
-              <div className="text-center py-4 text-gray-500">没有找到匹配的创意生成模型</div>
+              <div className="text-center py-4 text-muted-foreground">没有找到匹配的创意生成模型</div>
             )}
           </div>
         )
@@ -343,9 +349,16 @@ export function AiAssistant() {
       case "digitalHuman":
         return filteredDigitalHuman ? (
           <div className="space-y-2">
-            <Card className="flex items-center p-3 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors">
+            <Card
+              className="flex items-center p-3 bg-card border rounded-lg cursor-pointer hover:bg-accent transition-colors"
+              onClick={() =>
+                router.push(
+                  `/ai-chat/digital-human?returnUrl=${encodeURIComponent("/?tab=ai-assistant&section=digitalHuman")}`,
+                )
+              }
+            >
               <div className="flex-shrink-0 mr-3">
-                <GripVertical className="h-5 w-5 text-gray-500 cursor-grab" />
+                <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
               </div>
               <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
                 <Image
@@ -357,14 +370,14 @@ export function AiAssistant() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center mb-1">
-                  <h3 className="text-white font-medium truncate">{digitalHumanPlatform.name}</h3>
+                  <h3 className="text-foreground font-medium truncate">{digitalHumanPlatform.name}</h3>
                 </div>
-                <p className="text-sm text-gray-400 truncate">{digitalHumanPlatform.description}</p>
+                <p className="text-sm text-muted-foreground truncate">{digitalHumanPlatform.description}</p>
               </div>
             </Card>
           </div>
         ) : (
-          <div className="text-center py-4 text-gray-500">没有找到匹配的数字人平台</div>
+          <div className="text-center py-4 text-muted-foreground">没有找到匹配的数字人平台</div>
         )
 
       case "aiAssistants":
@@ -374,29 +387,29 @@ export function AiAssistant() {
               filteredAiAssistants.map((assistant) => (
                 <Card
                   key={assistant.id}
-                  className="flex items-center p-3 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
+                  className="flex items-center p-3 bg-card border rounded-lg cursor-pointer hover:bg-accent transition-colors"
                   onClick={() =>
                     router.push(
-                      `/ai-chat/${assistant.id === 1 ? "copywriter" : assistant.id === 2 ? "video-planner" : assistant.id === 3 ? "livestream-coach" : assistant.id === 4 ? "product-analyst" : "growth-advisor"}`,
+                      `/ai-chat/${assistant.id === 1 ? "copywriter" : assistant.id === 2 ? "video-planner" : assistant.id === 3 ? "livestream-coach" : assistant.id === 4 ? "product-analyst" : "growth-advisor"}?returnUrl=${encodeURIComponent("/?tab=ai-assistant&section=aiAssistants")}`,
                     )
                   }
                 >
                   <div className="flex-shrink-0 mr-3">
-                    <GripVertical className="h-5 w-5 text-gray-500 cursor-grab" />
+                    <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center mr-3 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-card flex items-center justify-center mr-3 flex-shrink-0">
                     {assistant.icon}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center mb-1">
-                      <h3 className="text-white font-medium truncate">{assistant.name}</h3>
+                      <h3 className="text-foreground font-medium truncate">{assistant.name}</h3>
                     </div>
-                    <p className="text-sm text-gray-400 truncate">{assistant.description}</p>
+                    <p className="text-sm text-muted-foreground truncate">{assistant.description}</p>
                   </div>
                 </Card>
               ))
             ) : (
-              <div className="text-center py-4 text-gray-500">没有找到匹配的AI助手</div>
+              <div className="text-center py-4 text-muted-foreground">没有找到匹配的AI助手</div>
             )}
           </div>
         )
@@ -408,15 +421,15 @@ export function AiAssistant() {
               filteredMyAssistants.map((assistant) => (
                 <Card
                   key={assistant.id}
-                  className="flex items-center p-3 bg-gray-900 border border-gray-800 rounded-lg cursor-pointer hover:bg-gray-800 transition-colors"
+                  className="flex items-center p-3 bg-card border rounded-lg cursor-pointer hover:bg-accent transition-colors"
                   onClick={() =>
                     router.push(
-                      `/ai-chat/${assistant.id === 1 ? "taobao-assistant" : assistant.id === 2 ? "tiktok-creator" : "xiaohongshu-writer"}`,
+                      `/ai-chat/${assistant.id === 1 ? "taobao-assistant" : assistant.id === 2 ? "tiktok-creator" : "xiaohongshu-writer"}?returnUrl=${encodeURIComponent("/?tab=ai-assistant&section=myAssistants")}`,
                     )
                   }
                 >
                   <div className="flex-shrink-0 mr-3">
-                    <GripVertical className="h-5 w-5 text-gray-500 cursor-grab" />
+                    <GripVertical className="h-5 w-5 text-muted-foreground cursor-grab" />
                   </div>
                   <div className="relative w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
                     <Image
@@ -428,9 +441,9 @@ export function AiAssistant() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center mb-1">
-                      <h3 className="text-white font-medium truncate mr-2">{assistant.name}</h3>
+                      <h3 className="text-foreground font-medium truncate mr-2">{assistant.name}</h3>
                       <div className="flex flex-wrap gap-1">
-                        <Badge variant="outline" className="text-xs py-0 border-gray-700 text-gray-300">
+                        <Badge variant="outline" className="text-xs py-0 border-muted text-muted-foreground">
                           {assistant.type === "personal" ? "个人" : "市场"}
                         </Badge>
                         {assistant.isShared && (
@@ -440,20 +453,16 @@ export function AiAssistant() {
                         )}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-400 truncate">{assistant.description}</p>
+                    <p className="text-sm text-muted-foreground truncate">{assistant.description}</p>
                   </div>
                   <div className="flex items-center gap-1 ml-2 flex-shrink-0">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 rounded-full bg-gray-800 hover:bg-gray-700"
-                        >
-                          <MoreVertical className="h-4 w-4 text-gray-400" />
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-card hover:bg-accent">
+                          <MoreVertical className="h-4 w-4 text-muted-foreground" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-gray-900 border-gray-700 text-white">
+                      <DropdownMenuContent className="bg-card border-muted text-foreground">
                         <DropdownMenuItem className="cursor-pointer">
                           <MessageSquare className="h-4 w-4 mr-2 text-green-400" />
                           开始对话
@@ -468,7 +477,7 @@ export function AiAssistant() {
                 </Card>
               ))
             ) : (
-              <div className="text-center py-4 text-gray-500">没有找到匹配的个人助手</div>
+              <div className="text-center py-4 text-muted-foreground">没有找到匹配的个人助手</div>
             )}
           </div>
         )
@@ -479,12 +488,10 @@ export function AiAssistant() {
   }
 
   return (
-    <div className="flex h-screen bg-black text-white">
-      {" "}
-      {/* Changed to horizontal flex layout */}
-      <div className="w-64 bg-gray-900 border-r border-gray-800 flex flex-col">
+    <div className="flex h-screen bg-background text-foreground">
+      <div className="w-64 bg-card border-r flex flex-col">
         {/* Sidebar header */}
-        <div className="p-4 border-b border-gray-800">
+        <div className="p-4 border-b">
           <Link href="/ai-assistant/create">
             <button className="w-full flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
               <Plus className="h-4 w-4 mr-2" />
@@ -502,7 +509,7 @@ export function AiAssistant() {
               className={`w-full flex items-center justify-between p-3 rounded-lg mb-1 transition-colors ${
                 activeSection === item.id
                   ? "bg-blue-600 text-white"
-                  : "text-gray-300 hover:bg-gray-800 hover:text-white"
+                  : "text-muted-foreground hover:bg-accent hover:text-foreground"
               }`}
             >
               <div className="flex items-center">
@@ -511,7 +518,7 @@ export function AiAssistant() {
               </div>
               <Badge
                 className={`text-xs ${
-                  activeSection === item.id ? "bg-blue-700 text-white" : "bg-gray-800 text-gray-300"
+                  activeSection === item.id ? "bg-blue-700 text-white" : "bg-muted text-muted-foreground"
                 }`}
               >
                 {item.count}
@@ -522,12 +529,12 @@ export function AiAssistant() {
       </div>
       <div className="flex-1 flex flex-col">
         {/* Top search bar */}
-        <div className="p-4 border-b border-gray-800">
+        <div className="p-4 border-b">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="搜索AI助手..."
-              className="pl-9 bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-blue-500"
+              className="pl-9 bg-background border text-foreground placeholder:text-muted-foreground focus-visible:ring-blue-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -537,7 +544,7 @@ export function AiAssistant() {
         {/* Content area */}
         <div className="flex-1 p-4 overflow-y-auto">
           <div className="mb-4">
-            <h2 className="text-xl font-semibold text-white">
+            <h2 className="text-xl font-semibold text-foreground">
               {sidebarItems.find((item) => item.id === activeSection)?.name}
             </h2>
           </div>

@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="zh-CN">
       <body className={inter.className}>
-        <ThemeProvider defaultTheme="dark" storageKey="skytalent-theme">
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} storageKey="skytalent-theme">
           {children}
         </ThemeProvider>
       </body>

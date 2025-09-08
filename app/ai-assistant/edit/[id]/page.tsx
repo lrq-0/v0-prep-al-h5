@@ -387,24 +387,35 @@ export default function EditAiAssistant() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <button onClick={() => handleNavigation("back")} className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <button
+          onClick={() => handleNavigation("back")}
+          className="flex items-center text-muted-foreground hover:text-foreground"
+        >
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </button>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">编辑AI助手</h1>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">编辑AI助手</h1>
       </div>
 
       {/* 主要内容区 */}
       <div className="p-4 pb-24">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 mb-6">
-            <TabsTrigger value="basic">基本信息</TabsTrigger>
-            <TabsTrigger value="advanced">高级设置</TabsTrigger>
-            <TabsTrigger value="knowledge">知识库</TabsTrigger>
-            <TabsTrigger value="publish">发布设置</TabsTrigger>
+          <TabsList className="grid grid-cols-4 mb-6 bg-muted">
+            <TabsTrigger value="basic" className="data-[state=active]:bg-background">
+              基本信息
+            </TabsTrigger>
+            <TabsTrigger value="advanced" className="data-[state=active]:bg-background">
+              高级设置
+            </TabsTrigger>
+            <TabsTrigger value="knowledge" className="data-[state=active]:bg-background">
+              知识库
+            </TabsTrigger>
+            <TabsTrigger value="publish" className="data-[state=active]:bg-background">
+              发布设置
+            </TabsTrigger>
           </TabsList>
 
           {/* 基本信息 */}
@@ -420,8 +431,8 @@ export default function EditAiAssistant() {
                     className="object-cover rounded-full border-2 border-blue-500/30"
                   />
                 ) : (
-                  <div className="w-full h-full rounded-full bg-gray-800 border-2 border-blue-500/30 flex items-center justify-center">
-                    <Upload className="h-8 w-8 text-gray-500" />
+                  <div className="w-full h-full rounded-full bg-muted border-2 border-blue-500/30 flex items-center justify-center">
+                    <Upload className="h-8 w-8 text-muted-foreground" />
                   </div>
                 )}
                 <label
@@ -438,21 +449,21 @@ export default function EditAiAssistant() {
                   onChange={handleAvatarChange}
                 />
               </div>
-              <p className="text-sm text-gray-400">上传助手头像</p>
+              <p className="text-sm text-muted-foreground">上传助手头像</p>
             </div>
 
             {/* 聊天模型选择 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label htmlFor="model" className="text-white">
+                <Label htmlFor="model" className="text-foreground">
                   聊天模型
                 </Label>
               </div>
               <Select value={model} onValueChange={setModel}>
-                <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
+                <SelectTrigger className="bg-background border-border text-foreground">
                   <SelectValue placeholder="选择聊天模型" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-gray-700 text-white">
+                <SelectContent className="bg-card border-border text-foreground">
                   <SelectItem value="deepseek">DeepSeek</SelectItem>
                   <SelectItem value="chatgpt">ChatGPT</SelectItem>
                   <SelectItem value="doubao">豆包</SelectItem>
@@ -464,15 +475,15 @@ export default function EditAiAssistant() {
             {/* 角色名称 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label htmlFor="name" className="text-white">
+                <Label htmlFor="name" className="text-foreground">
                   角色名称
                 </Label>
-                <span className="text-xs text-gray-400">{name.length}/20</span>
+                <span className="text-xs text-muted-foreground">{name.length}/20</span>
               </div>
               <Input
                 id="name"
                 placeholder="例如：英语口语陪练"
-                className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-blue-500"
+                className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-blue-500"
                 value={name}
                 onChange={(e) => setName(e.target.value.slice(0, 20))}
                 required
@@ -482,15 +493,15 @@ export default function EditAiAssistant() {
             {/* 角色简介 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label htmlFor="description" className="text-white">
+                <Label htmlFor="description" className="text-foreground">
                   角色简介
                 </Label>
-                <span className="text-xs text-gray-400">{description.length}/100</span>
+                <span className="text-xs text-muted-foreground">{description.length}/100</span>
               </div>
               <Textarea
                 id="description"
                 placeholder="简短介绍这个AI助手的功能和特点..."
-                className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-blue-500 min-h-[80px]"
+                className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-blue-500 min-h-[80px]"
                 value={description}
                 onChange={(e) => setDescription(e.target.value.slice(0, 100))}
                 required
@@ -500,15 +511,15 @@ export default function EditAiAssistant() {
             {/* 对话开场白 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label htmlFor="greeting" className="text-white">
+                <Label htmlFor="greeting" className="text-foreground">
                   对话开场白
                 </Label>
-                <span className="text-xs text-gray-400">{greeting.length}/200</span>
+                <span className="text-xs text-muted-foreground">{greeting.length}/200</span>
               </div>
               <Textarea
                 id="greeting"
                 placeholder="AI助手的第一句话，例如：'你好！我是你的英语口语陪练助手，有什么我可以帮助你的吗？'"
-                className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-blue-500 min-h-[80px]"
+                className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-blue-500 min-h-[80px]"
                 value={greeting}
                 onChange={(e) => setGreeting(e.target.value.slice(0, 200))}
                 required
@@ -519,15 +530,15 @@ export default function EditAiAssistant() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center">
-                  <Label htmlFor="definition" className="text-white mr-1">
+                  <Label htmlFor="definition" className="text-foreground mr-1">
                     角色定义
                   </Label>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-4 w-4 text-gray-400" />
+                        <Info className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-gray-800 text-white border-gray-700">
+                      <TooltipContent className="bg-card text-foreground border-border">
                         <p className="text-xs max-w-[200px]">
                           详细定义AI助手的行为、知识范围和回答风格，这将指导AI如何回应用户的问题
                         </p>
@@ -539,7 +550,7 @@ export default function EditAiAssistant() {
               <Textarea
                 id="definition"
                 placeholder="详细描述这个AI助手的应用对话标准、专业领域、回答风格等..."
-                className="bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-blue-500 min-h-[150px]"
+                className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-blue-500 min-h-[150px]"
                 value={definition}
                 onChange={(e) => setDefinition(e.target.value)}
                 required
@@ -553,15 +564,15 @@ export default function EditAiAssistant() {
             <div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <Label htmlFor="allow-file-upload" className="text-white mr-1">
+                  <Label htmlFor="allow-file-upload" className="text-foreground mr-1">
                     支持用户文件上传
                   </Label>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-4 w-4 text-gray-400" />
+                        <Info className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-gray-800 text-white border-gray-700">
+                      <TooltipContent className="bg-card text-foreground border-border">
                         <p className="text-xs max-w-[200px]">开启后，用户可以在对话中上传文件供AI助手分析</p>
                       </TooltipContent>
                     </Tooltip>
@@ -575,13 +586,13 @@ export default function EditAiAssistant() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center">
-                  <Label className="text-white mr-1">温度值</Label>
+                  <Label className="text-foreground mr-1">温度值</Label>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-4 w-4 text-gray-400" />
+                        <Info className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-gray-800 text-white border-gray-700">
+                      <TooltipContent className="bg-card text-foreground border-border">
                         <p className="text-xs max-w-[200px]">
                           控制AI回答的创造性和随机性，较低的值使回答更加确定和一致，较高的值使回答更加多样和创造性
                         </p>
@@ -593,7 +604,7 @@ export default function EditAiAssistant() {
               </div>
               <div className="px-1">
                 <Slider value={temperature} onValueChange={setTemperature} max={100} step={1} className="mb-1" />
-                <div className="flex justify-between text-xs text-gray-400">
+                <div className="flex justify-between text-xs text-muted-foreground">
                   <span>理性</span>
                   <span>感性</span>
                 </div>
@@ -604,13 +615,13 @@ export default function EditAiAssistant() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <div className="flex items-center">
-                  <Label className="text-white mr-1">多样性</Label>
+                  <Label className="text-foreground mr-1">多样性</Label>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-4 w-4 text-gray-400" />
+                        <Info className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-gray-800 text-white border-gray-700">
+                      <TooltipContent className="bg-card text-foreground border-border">
                         <p className="text-xs max-w-[200px]">
                           控制AI回答的广度和深度，较低的值使回答更加专注和深入，较高的值使回答更加广泛和多样
                         </p>
@@ -622,7 +633,7 @@ export default function EditAiAssistant() {
               </div>
               <div className="px-1">
                 <Slider value={diversity} onValueChange={setDiversity} max={100} step={1} className="mb-1" />
-                <div className="flex justify-between text-xs text-gray-400">
+                <div className="flex justify-between text-xs text-muted-foreground">
                   <span>深度</span>
                   <span>广度</span>
                 </div>
@@ -632,7 +643,7 @@ export default function EditAiAssistant() {
             {/* 分类选择 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label htmlFor="category" className="text-white">
+                <Label htmlFor="category" className="text-foreground">
                   所属分类
                 </Label>
               </div>
@@ -640,10 +651,10 @@ export default function EditAiAssistant() {
                 value={categoryId?.toString() || ""}
                 onValueChange={(value) => setCategoryId(Number(value) || null)}
               >
-                <SelectTrigger className="bg-gray-900 border-gray-700 text-white">
+                <SelectTrigger className="bg-background border-border text-foreground">
                   <SelectValue placeholder="选择分类" />
                 </SelectTrigger>
-                <SelectContent className="bg-gray-900 border-gray-700 text-white">
+                <SelectContent className="bg-card border-border text-foreground">
                   {mockCategories.map((category) => (
                     <SelectItem key={category.id} value={category.id.toString()}>
                       {category.name}
@@ -655,7 +666,7 @@ export default function EditAiAssistant() {
 
             {/* 权限设置 */}
             <div>
-              <h3 className="text-white font-medium mb-3">权限设置</h3>
+              <h3 className="text-foreground font-medium mb-3">权限设置</h3>
               <div className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <Checkbox
@@ -663,7 +674,7 @@ export default function EditAiAssistant() {
                     checked={permissions.allowCopy}
                     onCheckedChange={() => handlePermissionChange("allowCopy")}
                   />
-                  <Label htmlFor="allow-copy" className="text-white">
+                  <Label htmlFor="allow-copy" className="text-foreground">
                     允许用户复制对话内容
                   </Label>
                 </div>
@@ -673,7 +684,7 @@ export default function EditAiAssistant() {
                     checked={permissions.allowShare}
                     onCheckedChange={() => handlePermissionChange("allowShare")}
                   />
-                  <Label htmlFor="allow-share" className="text-white">
+                  <Label htmlFor="allow-share" className="text-foreground">
                     允许用户分享对话
                   </Label>
                 </div>
@@ -683,7 +694,7 @@ export default function EditAiAssistant() {
                     checked={permissions.allowDownload}
                     onCheckedChange={() => handlePermissionChange("allowDownload")}
                   />
-                  <Label htmlFor="allow-download" className="text-white">
+                  <Label htmlFor="allow-download" className="text-foreground">
                     允许用户下载对话记录
                   </Label>
                 </div>
@@ -696,12 +707,12 @@ export default function EditAiAssistant() {
             {/* 知识库文件上传 */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <Label className="text-white">知识库文档</Label>
+                <Label className="text-foreground">知识库文档</Label>
               </div>
-              <div className="p-4 border-2 border-dashed border-gray-700 rounded-lg text-center mb-3">
-                <Upload className="h-8 w-8 text-gray-500 mx-auto mb-2" />
-                <p className="text-sm text-gray-400 mb-2">上传文档以增强AI助手的专业知识</p>
-                <p className="text-xs text-gray-500 mb-3">支持PDF、DOCX、TXT等格式，单个文件不超过10MB</p>
+              <div className="p-4 border-2 border-dashed border-border rounded-lg text-center mb-3">
+                <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                <p className="text-sm text-muted-foreground mb-2">上传文档以增强AI助手的专业知识</p>
+                <p className="text-xs text-muted-foreground mb-3">支持PDF、DOCX、TXT等格式，单个文件不超过10MB</p>
                 <Input
                   type="file"
                   className="hidden"
@@ -711,7 +722,11 @@ export default function EditAiAssistant() {
                   multiple
                 />
                 <Label htmlFor="knowledge-upload">
-                  <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20" asChild>
+                  <Button
+                    variant="outline"
+                    className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent"
+                    asChild
+                  >
                     <span>选择文件</span>
                   </Button>
                 </Label>
@@ -721,14 +736,14 @@ export default function EditAiAssistant() {
               {knowledgeFiles.length > 0 && (
                 <div className="space-y-2 mb-3">
                   {knowledgeFiles.map((file, index) => (
-                    <Card key={index} className="p-2 bg-gray-900 border-gray-800 flex justify-between items-center">
+                    <Card key={index} className="p-2 bg-card border-border flex justify-between items-center">
                       <div className="flex items-center">
                         <div className="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center mr-2">
                           <Upload className="h-4 w-4 text-blue-400" />
                         </div>
                         <div className="overflow-hidden">
-                          <p className="text-sm text-white truncate">{file.name}</p>
-                          <p className="text-xs text-gray-400">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          <p className="text-sm text-foreground truncate">{file.name}</p>
+                          <p className="text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                         </div>
                       </div>
                       <Button
@@ -744,10 +759,10 @@ export default function EditAiAssistant() {
                 </div>
               )}
 
-              <Alert className="bg-gray-900 border-yellow-500/30 text-yellow-400">
+              <Alert className="bg-card border-yellow-500/30 text-yellow-400">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>知识库提示</AlertTitle>
-                <AlertDescription className="text-gray-300 text-sm">
+                <AlertDescription className="text-muted-foreground text-sm">
                   上传的文档将被用于增强AI助手的专业知识。文档内容越丰富、越相关，AI助手的回答质量就越高。
                 </AlertDescription>
               </Alert>
@@ -760,15 +775,15 @@ export default function EditAiAssistant() {
             <div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
-                  <Label htmlFor="is-published" className="text-white mr-1">
+                  <Label htmlFor="is-published" className="text-foreground mr-1">
                     发布状态
                   </Label>
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger>
-                        <Info className="h-4 w-4 text-gray-400" />
+                        <Info className="h-4 w-4 text-muted-foreground" />
                       </TooltipTrigger>
-                      <TooltipContent className="bg-gray-800 text-white border-gray-700">
+                      <TooltipContent className="bg-card text-foreground border-border">
                         <p className="text-xs max-w-[200px]">发布后，该AI助手将在AI助手市场中可见，用户可以使用它</p>
                       </TooltipContent>
                     </Tooltip>
@@ -776,24 +791,24 @@ export default function EditAiAssistant() {
                 </div>
                 <Switch id="is-published" checked={isPublished} onCheckedChange={setIsPublished} />
               </div>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 {isPublished ? "当前状态：已发布" : "当前状态：未发布（仅自己可见）"}
               </p>
             </div>
 
             {/* 可见性设置 */}
             <div>
-              <Label className="text-white mb-2 block">可见性</Label>
+              <Label className="text-foreground mb-2 block">可见性</Label>
               <RadioGroup value={visibility} onValueChange={setVisibility} className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="public" id="public" className="border-gray-600" />
-                  <Label htmlFor="public" className="text-white">
+                  <RadioGroupItem value="public" id="public" className="border-border" />
+                  <Label htmlFor="public" className="text-foreground">
                     公开 - 所有用户可见
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="private" id="private" className="border-gray-600" />
-                  <Label htmlFor="private" className="text-white">
+                  <RadioGroupItem value="private" id="private" className="border-border" />
+                  <Label htmlFor="private" className="text-foreground">
                     私有 - 仅自己和指定用户可见
                   </Label>
                 </div>
@@ -802,23 +817,23 @@ export default function EditAiAssistant() {
 
             {/* 价格设置 */}
             <div>
-              <Label className="text-white mb-2 block">价格设置</Label>
+              <Label className="text-foreground mb-2 block">价格设置</Label>
               <RadioGroup value={pricingType} onValueChange={setPricingType} className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="free" id="free" className="border-gray-600" />
-                  <Label htmlFor="free" className="text-white">
+                  <RadioGroupItem value="free" id="free" className="border-border" />
+                  <Label htmlFor="free" className="text-foreground">
                     免费
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="paid" id="paid" className="border-gray-600" />
-                  <Label htmlFor="paid" className="text-white">
+                  <RadioGroupItem value="paid" id="paid" className="border-border" />
+                  <Label htmlFor="paid" className="text-foreground">
                     付费
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="subscription" id="subscription" className="border-gray-600" />
-                  <Label htmlFor="subscription" className="text-white">
+                  <RadioGroupItem value="subscription" id="subscription" className="border-border" />
+                  <Label htmlFor="subscription" className="text-foreground">
                     会员专享
                   </Label>
                 </div>
@@ -826,7 +841,7 @@ export default function EditAiAssistant() {
 
               {pricingType === "paid" && (
                 <div className="mt-3">
-                  <Label htmlFor="price" className="text-white mb-2 block">
+                  <Label htmlFor="price" className="text-foreground mb-2 block">
                     设置价格 (元)
                   </Label>
                   <Input
@@ -834,7 +849,7 @@ export default function EditAiAssistant() {
                     type="number"
                     min="0"
                     step="0.1"
-                    className="bg-gray-900 border-gray-700 text-white w-32"
+                    className="bg-background border-border text-foreground w-32"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
                   />
@@ -848,7 +863,7 @@ export default function EditAiAssistant() {
                     checked={subscriptionRequired}
                     onCheckedChange={(checked) => setSubscriptionRequired(checked === true)}
                   />
-                  <Label htmlFor="subscription-required" className="text-white">
+                  <Label htmlFor="subscription-required" className="text-foreground">
                     仅限会员使用
                   </Label>
                 </div>
@@ -856,7 +871,7 @@ export default function EditAiAssistant() {
             </div>
 
             {/* 删除助手 */}
-            <div className="pt-4 border-t border-gray-800">
+            <div className="pt-4 border-t border-border">
               <h3 className="text-red-400 font-medium mb-2">危险操作</h3>
               <Button
                 variant="destructive"
@@ -866,7 +881,7 @@ export default function EditAiAssistant() {
                 <Trash2 className="h-4 w-4 mr-2" />
                 删除此AI助手
               </Button>
-              <p className="text-xs text-gray-400 mt-2">
+              <p className="text-xs text-muted-foreground mt-2">
                 删除后，该AI助手将永久消失，无法恢复。所有相关的对话记录也将被删除。
               </p>
             </div>
@@ -875,7 +890,7 @@ export default function EditAiAssistant() {
       </div>
 
       {/* 底部保存按钮 */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gray-900/95 backdrop-blur-md border-t border-gray-800">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-card/95 backdrop-blur-md border-t border-border">
         <Button
           type="submit"
           className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400"
@@ -889,10 +904,10 @@ export default function EditAiAssistant() {
 
       {/* 删除确认对话框 */}
       <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent className="bg-gray-900 border-gray-800 text-white">
+        <DialogContent className="bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle className="text-red-400">删除AI助手</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogDescription className="text-muted-foreground">
               您确定要删除此AI助手吗？此操作无法撤销，所有相关的对话记录也将被删除。
             </DialogDescription>
           </DialogHeader>
@@ -900,7 +915,7 @@ export default function EditAiAssistant() {
             <Button
               variant="outline"
               onClick={() => setIsDeleteDialogOpen(false)}
-              className="border-gray-700 text-gray-300"
+              className="border-border text-muted-foreground"
             >
               取消
             </Button>
@@ -918,10 +933,10 @@ export default function EditAiAssistant() {
 
       {/* 未保存更改提示对话框 */}
       <Dialog open={isUnsavedChangesDialogOpen} onOpenChange={setIsUnsavedChangesDialogOpen}>
-        <DialogContent className="bg-gray-900 border-gray-800 text-white">
+        <DialogContent className="bg-card border-border text-foreground">
           <DialogHeader>
             <DialogTitle>未保存的更改</DialogTitle>
-            <DialogDescription className="text-gray-400">
+            <DialogDescription className="text-muted-foreground">
               您有未保存的更改，离开此页面将丢失这些更改。是否继续？
             </DialogDescription>
           </DialogHeader>
@@ -929,7 +944,7 @@ export default function EditAiAssistant() {
             <Button
               variant="outline"
               onClick={() => setIsUnsavedChangesDialogOpen(false)}
-              className="border-gray-700 text-gray-300"
+              className="border-border text-muted-foreground"
             >
               取消
             </Button>

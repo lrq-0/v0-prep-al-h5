@@ -1,16 +1,14 @@
 "use client"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { ArrowLeft, Clock, FileText, Award, MessageCircle, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function ExamIntro({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
-  // 开始考试
-  const startExam = () => {
-    router.push(`/exams/${params.id}/question/1`)
-  }
+  const returnUrl = searchParams.get("returnUrl") || "/"
 
   // 电商、短视频、自媒体相关考试数据
   const examsData = {
@@ -92,10 +90,10 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
   const exam = examsData[params.id as keyof typeof examsData] || examsData["1"]
 
   return (
-    <div className="min-h-screen bg-[#0a0e17] text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航 */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-800">
-        <Link href="/exams" className="flex items-center text-gray-400">
+      <div className="flex items-center justify-between p-4 border-b border-border">
+        <Link href={returnUrl} className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-1" />
           <span>返回</span>
         </Link>
@@ -107,18 +105,18 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
         {/* 考试标题和描述 */}
         <div className="mb-6">
           <h2 className="text-xl font-bold mb-3">{exam.title}</h2>
-          <p className="text-gray-300 text-sm leading-relaxed">{exam.description}</p>
+          <p className="text-muted-foreground text-sm leading-relaxed">{exam.description}</p>
         </div>
 
         {/* 考试助手 */}
-        <div className="bg-[#131b2e] rounded-lg p-4 mb-6 flex justify-between items-center">
+        <div className="bg-card rounded-lg p-4 mb-6 flex justify-between items-center border">
           <div className="flex items-center">
             <div className="bg-purple-600 rounded-full p-2 mr-3">
               <MessageCircle className="h-5 w-5" />
             </div>
             <div>
               <h3 className="font-medium">考试助手</h3>
-              <p className="text-gray-400 text-xs">有任何关于本次考试的问题，都可以向我咨询</p>
+              <p className="text-muted-foreground text-xs">有任何关于本次考试的问题，都可以向我咨询</p>
             </div>
           </div>
           <Button variant="ghost" size="sm" className="text-purple-400">
@@ -128,25 +126,25 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
 
         {/* 考试基本信息 */}
         <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-[#131b2e] rounded-lg p-4 flex flex-col items-center justify-center">
+          <div className="bg-card rounded-lg p-4 flex flex-col items-center justify-center border">
             <Clock className="h-6 w-6 text-purple-400 mb-2" />
             <div className="text-center">
               <p className="font-bold text-lg">{exam.duration}</p>
-              <p className="text-gray-400 text-xs">考试时长</p>
+              <p className="text-muted-foreground text-xs">考试时长</p>
             </div>
           </div>
-          <div className="bg-[#131b2e] rounded-lg p-4 flex flex-col items-center justify-center">
+          <div className="bg-card rounded-lg p-4 flex flex-col items-center justify-center border">
             <FileText className="h-6 w-6 text-purple-400 mb-2" />
             <div className="text-center">
               <p className="font-bold text-lg">{exam.questionCount}题</p>
-              <p className="text-gray-400 text-xs">题目数量</p>
+              <p className="text-muted-foreground text-xs">题目数量</p>
             </div>
           </div>
-          <div className="bg-[#131b2e] rounded-lg p-4 flex flex-col items-center justify-center">
+          <div className="bg-card rounded-lg p-4 flex flex-col items-center justify-center border">
             <Award className="h-6 w-6 text-purple-400 mb-2" />
             <div className="text-center">
               <p className="font-bold text-lg">{exam.totalScore}分</p>
-              <p className="text-gray-400 text-xs">总分</p>
+              <p className="text-muted-foreground text-xs">总分</p>
             </div>
           </div>
         </div>
@@ -156,17 +154,17 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
           <h3 className="text-lg font-medium mb-3">题型分布</h3>
 
           {exam.questionTypes.map((item, index) => (
-            <div key={index} className="bg-[#131b2e] rounded-lg p-4 mb-3">
+            <div key={index} className="bg-card rounded-lg p-4 mb-3 border">
               <div className="flex justify-between items-center mb-2">
                 <div>
                   <h4 className="font-medium">{item.type}</h4>
-                  <p className="text-gray-400 text-xs">
+                  <p className="text-muted-foreground text-xs">
                     {item.count}题 / {item.score}分
                   </p>
                 </div>
                 <span className="text-purple-400 font-medium">{item.percentage}%</span>
               </div>
-              <div className="w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+              <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
                 <div className="bg-purple-500 h-full rounded-full" style={{ width: `${item.percentage}%` }}></div>
               </div>
             </div>
@@ -176,12 +174,12 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
         {/* 考试说明 */}
         <div className="mb-6">
           <h3 className="text-lg font-medium mb-3">考试说明</h3>
-          <div className="bg-[#131b2e] rounded-lg p-4">
+          <div className="bg-card rounded-lg p-4 border">
             <ul className="space-y-3">
               {exam.examNotes.map((note, index) => (
                 <li key={index} className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-purple-500 mr-2 shrink-0 mt-0.5" />
-                  <span className="text-gray-300 text-sm">{note}</span>
+                  <span className="text-muted-foreground text-sm">{note}</span>
                 </li>
               ))}
             </ul>
@@ -191,14 +189,14 @@ export default function ExamIntro({ params }: { params: { id: string } }) {
         {/* 证书说明 */}
         <div className="mb-6">
           <h3 className="text-lg font-medium mb-3">证书说明</h3>
-          <div className="bg-[#131b2e] rounded-lg p-4">
-            <p className="text-gray-300 text-sm leading-relaxed">{exam.certificateInfo}</p>
+          <div className="bg-card rounded-lg p-4 border">
+            <p className="text-muted-foreground text-sm leading-relaxed">{exam.certificateInfo}</p>
           </div>
         </div>
 
         {/* 开始考试按钮 */}
         <Button
-          onClick={startExam}
+          onClick={() => router.push(`/exams/${params.id}/question/1`)}
           className="w-full bg-purple-600 hover:bg-purple-700 text-white py-6 rounded-lg text-lg font-medium mb-6"
         >
           开始考试

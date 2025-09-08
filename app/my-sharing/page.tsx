@@ -64,36 +64,36 @@ export default function MySharing() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href="/" className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <Link href="/" className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">我的分享</h1>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">我的分享</h1>
       </div>
 
       <div className="p-4 pb-16">
         {/* 账户余额 */}
-        <Card className="p-4 mb-4 bg-gradient-to-r from-blue-900/50 to-gray-900 border-gray-800">
+        <Card className="p-4 mb-4 bg-gradient-to-r from-blue-900/50 to-muted border-border">
           <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-semibold text-white">账户余额</h2>
+            <h2 className="text-lg font-semibold text-foreground">账户余额</h2>
             <Link href="/my-sharing/withdraw-history">
-              <button className="text-xs text-gray-400 flex items-center">
+              <button className="text-xs text-muted-foreground flex items-center">
                 提现记录
                 <ChevronRight className="h-3 w-3 ml-1" />
               </button>
             </Link>
           </div>
-          <div className="text-3xl font-bold text-white mb-4">¥{account.balance.toFixed(2)}</div>
-          <div className="text-xs text-gray-400 mb-4">累计收益：¥{account.totalEarnings.toFixed(2)}</div>
+          <div className="text-3xl font-bold text-foreground mb-4">¥{account.balance.toFixed(2)}</div>
+          <div className="text-xs text-muted-foreground mb-4">累计收益：¥{account.totalEarnings.toFixed(2)}</div>
           <div className="grid grid-cols-2 gap-3">
             <Button className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400">
               <Wallet className="h-4 w-4 mr-2" />
               提现
             </Button>
-            <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20">
+            <Button variant="outline" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent">
               <CreditCard className="h-4 w-4 mr-2" />
               充值
             </Button>
@@ -102,22 +102,22 @@ export default function MySharing() {
 
         {/* 分享工具 */}
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <Card className="p-3 bg-gray-900 border-gray-800">
+          <Card className="p-3 bg-card border-border">
             <button className="w-full h-full flex flex-col items-center justify-center" onClick={copyLink}>
               <div className="w-10 h-10 rounded-full bg-blue-900/20 flex items-center justify-center mb-2">
                 <Link2 className="h-5 w-5 text-blue-400" />
               </div>
-              <div className="text-sm font-medium text-white">我的链接</div>
+              <div className="text-sm font-medium text-foreground">我的链接</div>
               {linkCopied && <div className="text-xs text-green-400 mt-1">已复制链接</div>}
             </button>
           </Card>
           <Link href="/my-sharing/poster">
-            <Card className="p-3 bg-gray-900 border-gray-800">
+            <Card className="p-3 bg-card border-border">
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-10 h-10 rounded-full bg-blue-900/20 flex items-center justify-center mb-2">
                   <QrCode className="h-5 w-5 text-blue-400" />
                 </div>
-                <div className="text-sm font-medium text-white">我的二维码</div>
+                <div className="text-sm font-medium text-foreground">我的二维码</div>
               </div>
             </Card>
           </Link>
@@ -126,112 +126,112 @@ export default function MySharing() {
         {/* 功能按钮 */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <Link href="/my-sharing/fund-details">
-            <Card className="p-3 bg-gray-900 border-gray-800">
+            <Card className="p-3 bg-card border-border">
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-8 h-8 rounded-full bg-blue-900/20 flex items-center justify-center mb-1">
                   <History className="h-4 w-4 text-blue-400" />
                 </div>
-                <div className="text-xs font-medium text-white">佣金明细</div>
+                <div className="text-xs font-medium text-foreground">佣金明细</div>
               </div>
             </Card>
           </Link>
           <Link href="/my-sharing/share-list">
-            <Card className="p-3 bg-gray-900 border-gray-800">
+            <Card className="p-3 bg-card border-border">
               <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-8 h-8 rounded-full bg-blue-900/20 flex items-center justify-center mb-1">
                   <TrendingUp className="h-4 w-4 text-blue-400" />
                 </div>
-                <div className="text-xs font-medium text-white">分享列表</div>
+                <div className="text-xs font-medium text-foreground">分享列表</div>
               </div>
             </Card>
           </Link>
         </div>
 
         {/* 推广数据看板 */}
-        <h2 className="text-lg font-semibold text-white mb-3">推广数据看板</h2>
+        <h2 className="text-lg font-semibold text-foreground mb-3">推广数据看板</h2>
         <div className="space-y-4 mb-6">
           {/* 今日数据 */}
-          <Card className="p-3 bg-gray-900 border-gray-800">
-            <h3 className="text-sm font-medium text-white mb-2">今日数据</h3>
+          <Card className="p-3 bg-card border-border">
+            <h3 className="text-sm font-medium text-foreground mb-2">今日数据</h3>
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.today.registrations}</div>
-                <div className="text-xs text-gray-400">注册用户</div>
+                <div className="text-base font-bold text-foreground">{promotionData.today.registrations}</div>
+                <div className="text-xs text-muted-foreground">注册用户</div>
               </div>
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.today.payments}</div>
-                <div className="text-xs text-gray-400">付款数</div>
+                <div className="text-base font-bold text-foreground">{promotionData.today.payments}</div>
+                <div className="text-xs text-muted-foreground">付款数</div>
               </div>
               <div className="text-center">
                 <div className="text-base font-bold text-blue-400">¥{promotionData.today.commission.toFixed(2)}</div>
-                <div className="text-xs text-gray-400">佣金收入</div>
+                <div className="text-xs text-muted-foreground">佣金收入</div>
               </div>
             </div>
           </Card>
 
           {/* 昨日数据 */}
-          <Card className="p-3 bg-gray-900 border-gray-800">
-            <h3 className="text-sm font-medium text-white mb-2">昨日数据</h3>
+          <Card className="p-3 bg-card border-border">
+            <h3 className="text-sm font-medium text-foreground mb-2">昨日数据</h3>
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.yesterday.registrations}</div>
-                <div className="text-xs text-gray-400">注册用户</div>
+                <div className="text-base font-bold text-foreground">{promotionData.yesterday.registrations}</div>
+                <div className="text-xs text-muted-foreground">注册用户</div>
               </div>
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.yesterday.payments}</div>
-                <div className="text-xs text-gray-400">付款数</div>
+                <div className="text-base font-bold text-foreground">{promotionData.yesterday.payments}</div>
+                <div className="text-xs text-muted-foreground">付款数</div>
               </div>
               <div className="text-center">
                 <div className="text-base font-bold text-blue-400">
                   ¥{promotionData.yesterday.commission.toFixed(2)}
                 </div>
-                <div className="text-xs text-gray-400">佣金收入</div>
+                <div className="text-xs text-muted-foreground">佣金收入</div>
               </div>
             </div>
           </Card>
 
           {/* 近7日数据 */}
-          <Card className="p-3 bg-gray-900 border-gray-800">
-            <h3 className="text-sm font-medium text-white mb-2">近7日数据</h3>
+          <Card className="p-3 bg-card border-border">
+            <h3 className="text-sm font-medium text-foreground mb-2">近7日数据</h3>
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.week.registrations}</div>
-                <div className="text-xs text-gray-400">注册用户</div>
+                <div className="text-base font-bold text-foreground">{promotionData.week.registrations}</div>
+                <div className="text-xs text-muted-foreground">注册用户</div>
               </div>
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.week.payments}</div>
-                <div className="text-xs text-gray-400">付款数</div>
+                <div className="text-base font-bold text-foreground">{promotionData.week.payments}</div>
+                <div className="text-xs text-muted-foreground">付款数</div>
               </div>
               <div className="text-center">
                 <div className="text-base font-bold text-blue-400">¥{promotionData.week.commission.toFixed(2)}</div>
-                <div className="text-xs text-gray-400">佣金收入</div>
+                <div className="text-xs text-muted-foreground">佣金收入</div>
               </div>
             </div>
           </Card>
 
           {/* 近30日数据 */}
-          <Card className="p-3 bg-gray-900 border-gray-800">
-            <h3 className="text-sm font-medium text-white mb-2">近30日数据</h3>
+          <Card className="p-3 bg-card border-border">
+            <h3 className="text-sm font-medium text-foreground mb-2">近30日数据</h3>
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.month.registrations}</div>
-                <div className="text-xs text-gray-400">注册用户</div>
+                <div className="text-base font-bold text-foreground">{promotionData.month.registrations}</div>
+                <div className="text-xs text-muted-foreground">注册用户</div>
               </div>
               <div className="text-center">
-                <div className="text-base font-bold text-white">{promotionData.month.payments}</div>
-                <div className="text-xs text-gray-400">付款数</div>
+                <div className="text-base font-bold text-foreground">{promotionData.month.payments}</div>
+                <div className="text-xs text-muted-foreground">付款数</div>
               </div>
               <div className="text-center">
                 <div className="text-base font-bold text-blue-400">¥{promotionData.month.commission.toFixed(2)}</div>
-                <div className="text-xs text-gray-400">佣金收入</div>
+                <div className="text-xs text-muted-foreground">佣金收入</div>
               </div>
             </div>
           </Card>
         </div>
 
         {/* 佣金排行榜 */}
-        <h2 className="text-lg font-semibold text-white mb-3">佣金排行榜</h2>
-        <Card className="p-4 bg-gray-900 border-gray-800">
+        <h2 className="text-lg font-semibold text-foreground mb-3">佣金排行榜</h2>
+        <Card className="p-4 bg-card border-border">
           <div className="space-y-3">
             {commissionRanking.map((user, index) => (
               <div key={user.id} className="flex items-center">
@@ -256,7 +256,7 @@ export default function MySharing() {
                   <Image src={user.avatar || "/placeholder.svg"} alt={user.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1">
-                  <div className="text-sm text-white">{user.name}</div>
+                  <div className="text-sm text-foreground">{user.name}</div>
                 </div>
                 <div className="text-sm font-medium text-amber-400">¥{user.commission.toFixed(2)}</div>
               </div>

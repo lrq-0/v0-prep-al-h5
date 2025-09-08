@@ -76,7 +76,7 @@ export default function CourseCurriculum({ params }: { params: { id: string } })
         <Image src={course.image || "/placeholder.svg"} alt={course.title} fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90 flex flex-col justify-end p-4">
           <h1 className="text-xl font-bold text-white mb-1">{course.title}</h1>
-          <p className="text-sm text-gray-300 mb-2">{course.instructor}</p>
+          <p className="text-sm text-white mb-2">{course.instructor}</p>
           <div className="flex items-center">
             <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
               <div className="h-full bg-blue-500" style={{ width: `${progressPercentage}%` }}></div>

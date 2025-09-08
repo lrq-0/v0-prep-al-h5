@@ -153,7 +153,7 @@ export default function KnowledgeManagement() {
     {
       id: 11,
       title: "政治考点归纳",
-      category: "政治",
+      category: "政��",
       format: "PDF",
       uploadTime: "2025-03-01 11:50",
       size: "2.8MB",

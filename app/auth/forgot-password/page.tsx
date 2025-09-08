@@ -77,7 +77,7 @@ export default function ForgotPasswordPage() {
               </div>
               <h1 className="text-2xl font-bold mb-2">邮件已发送</h1>
               <p className="text-muted-foreground mb-6">
-                密码重置链接已发送至您的邮箱
+                ��码重置链接已发送至您的邮箱
                 <br />
                 <span className="font-medium">{email}</span>
                 <br />

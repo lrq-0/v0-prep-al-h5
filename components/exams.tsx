@@ -2,15 +2,26 @@
 
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { Clock, BookOpen, BadgeIcon as Certificate, Trophy, Calendar, ShoppingBag } from "lucide-react"
+import { Clock, BookOpen, Briefcase as Certificate, Trophy, Calendar, ShoppingBag, Search } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
-export function Exams() {
+interface ExamsProps {
+  initialSection?: string
+}
+
+export function Exams({ initialSection }: ExamsProps) {
   const router = useRouter()
   const [searchQuery, setSearchQuery] = useState("")
+  const [activeSection, setActiveSection] = useState(initialSection || "featured")
+
+  useEffect(() => {
+    if (initialSection) {
+      setActiveSection(initialSection)
+    }
+  }, [initialSection])
 
   // Add state for section collapse controls
   const [collapsedSections, setCollapsedSections] = useState({
@@ -43,7 +54,7 @@ export function Exams() {
       id: 2,
       title: "短视频创作技能测评",
       description: "评估您的短视频策划、拍摄和剪辑能力",
-      image: "/placeholder.svg?height=200&width=300&query=video+creation+skills",
+      image: "/video-creation-skills.png",
       count: "6套试卷",
       type: "mock",
     },
@@ -51,7 +62,7 @@ export function Exams() {
       id: 3,
       title: "自媒体运营能力测试",
       description: "测试您的内容创作和账号运营能力",
-      image: "/placeholder.svg?height=200&width=300&query=social+media+management",
+      image: "/social-media-management.png",
       count: "4套试卷",
       type: "mock",
     },
@@ -63,7 +74,7 @@ export function Exams() {
       id: 1,
       title: "电商运营专业认证",
       description: "国内权威的电商运营能力认证",
-      image: "/placeholder.svg?height=200&width=300&query=ecommerce+certification",
+      image: "/ecommerce-certification.png",
       date: "2025-06-15",
       deadline: "2025-05-30",
       price: 1299,
@@ -78,7 +89,7 @@ export function Exams() {
       id: 2,
       title: "短视频创作师认证",
       description: "专业短视频内容创作能力认证",
-      image: "/placeholder.svg?height=200&width=300&query=video+creator+certification",
+      image: "/video-creator-certification.png",
       date: "2025-07-20",
       deadline: "2025-06-30",
       price: 1500,
@@ -92,7 +103,7 @@ export function Exams() {
       id: 3,
       title: "自媒体运营专家认证",
       description: "自媒体账号运营与变现能力认证",
-      image: "/placeholder.svg?height=200&width=300&query=social+media+expert",
+      image: "/social-media-expert.png",
       date: "2025-05-10",
       deadline: "2025-04-20",
       price: 1800,
@@ -105,7 +116,7 @@ export function Exams() {
       id: 4,
       title: "直播带货主播认证",
       description: "专业直播带货技能认证",
-      image: "/placeholder.svg?height=200&width=300&query=livestream+host+certification",
+      image: "/livestream-host-certification.png",
       date: "2025-08-15",
       deadline: "2025-07-30",
       price: 2000,
@@ -118,7 +129,7 @@ export function Exams() {
       id: 5,
       title: "内容营销策划师认证",
       description: "内容营销策划与执行能力认证",
-      image: "/placeholder.svg?height=200&width=300&query=content+marketing+certification",
+      image: "/content-marketing-certification.png",
       date: "2025-09-20",
       deadline: "2025-08-31",
       price: 1600,
@@ -135,7 +146,7 @@ export function Exams() {
       id: 1,
       title: "全国短视频创作大赛",
       description: "展示短视频创作才华，赢取品牌合作机会",
-      image: "/placeholder.svg?height=200&width=300&query=video+creation+competition",
+      image: "/video-creation-competition.png",
       deadline: "2025-05-30",
       date: "2025-06-15",
       price: 500,
@@ -148,7 +159,7 @@ export function Exams() {
       id: 2,
       title: "电商创业创新大赛",
       description: "发掘电商创业创新项目和人才",
-      image: "/placeholder.svg?height=200&width=300&query=ecommerce+innovation+contest",
+      image: "/ecommerce-innovation-contest.png",
       deadline: "2025-06-15",
       date: "2025-07-10",
       price: 0,
@@ -160,7 +171,7 @@ export function Exams() {
       id: 3,
       title: "直播带货达人挑战赛",
       description: "测试直播带货技能和销售能力",
-      image: "/placeholder.svg?height=200&width=300&query=livestream+selling+challenge",
+      image: "/livestream-selling-challenge.png",
       deadline: "2025-04-30",
       date: "2025-05-15",
       price: 300,
@@ -178,19 +189,18 @@ export function Exams() {
     exam.title.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
-  // 修改handleMockExamClick函数，直接跳转到考试介绍页面而不是分类页面
   const handleMockExamClick = (examId) => {
-    router.push(`/exams/${examId}/intro`)
+    router.push(`/exams/${examId}/intro?returnUrl=${encodeURIComponent("/?tab=exams&section=mock")}`)
   }
 
-  // Modify the handleCertificateExamClick function to direct to certificate page
   const handleCertificateExamClick = (examId) => {
-    router.push(`/exams/${examId}/certificate`)
+    router.push(`/exams/${examId}/certificate?returnUrl=${encodeURIComponent("/?tab=exams&section=certificate")}`)
   }
 
-  // 修改handleCompetitionClick函数，确保直接跳转到赛事介绍页面
   const handleCompetitionClick = (competitionId) => {
-    router.push(`/competitions/${competitionId}/intro`)
+    router.push(
+      `/competitions/${competitionId}/intro?returnUrl=${encodeURIComponent("/?tab=exams&section=competition")}`,
+    )
   }
 
   // 获取考试类型标签和颜色
@@ -200,7 +210,7 @@ export function Exams() {
         return {
           icon: <ShoppingBag className="h-4 w-4 mr-1" />,
           label: "技能评估",
-          color: "bg-purple-900 text-purple-100",
+          color: "bg-blue-900 text-blue-100",
         }
       case "certificate":
         return {
@@ -209,7 +219,7 @@ export function Exams() {
           color: "bg-pink-900 text-pink-100",
         }
       case "competition":
-        return { icon: <Trophy className="h-4 w-4 mr-1" />, label: "创作大赛", color: "bg-purple-900 text-purple-100" }
+        return { icon: <Trophy className="h-4 w-4 mr-1" />, label: "创作大赛", color: "bg-blue-900 text-blue-100" }
       default:
         return { icon: <BookOpen className="h-4 w-4 mr-1" />, label: "未知类型", color: "bg-gray-700 text-gray-100" }
     }
@@ -231,7 +241,7 @@ export function Exams() {
     return (
       <Card
         key={`${exam.type}-${exam.id}`}
-        className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow bg-gray-900 border-gray-800"
+        className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow bg-card border-border"
         onClick={handleClick}
       >
         <div className="relative">
@@ -267,15 +277,15 @@ export function Exams() {
           {/* 标题和描述 */}
           <div className="absolute bottom-0 left-0 right-0 p-4">
             <h3 className="font-medium text-white text-lg line-clamp-2">{exam.title}</h3>
-            <p className="text-xs text-gray-300 mt-1 line-clamp-1">{exam.description}</p>
+            <p className="text-xs text-white/80 mt-1 line-clamp-1">{exam.description}</p>
           </div>
         </div>
 
-        <div className="p-4 bg-gray-900">
+        <div className="p-4 bg-card">
           {/* 模拟考试信息 */}
           {exam.type === "mock" && (
-            <div className="flex items-center text-sm text-gray-300">
-              <BookOpen className="h-4 w-4 mr-1 text-purple-400" />
+            <div className="flex items-center text-sm text-muted-foreground">
+              <BookOpen className="h-4 w-4 mr-1 text-blue-600" />
               <span>{exam.count}</span>
             </div>
           )}
@@ -284,20 +294,20 @@ export function Exams() {
           {(exam.type === "certificate" || exam.type === "competition") && (
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <div className="flex items-center text-sm text-gray-300">
-                  <Calendar className="h-4 w-4 mr-1 text-purple-400" />
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4 mr-1 text-blue-600" />
                   <span>考试日期: {exam.date}</span>
                 </div>
                 {isPurchased ? (
                   <div className="text-sm font-medium text-green-400">已报考</div>
                 ) : exam.price > 0 ? (
-                  <div className="text-sm font-medium text-purple-400">¥{exam.price}</div>
+                  <div className="text-sm font-medium text-blue-600">¥{exam.price}</div>
                 ) : (
                   <div className="text-sm font-medium text-green-400">免费</div>
                 )}
               </div>
-              <div className="flex items-center text-sm text-gray-300">
-                <Clock className="h-4 w-4 mr-1 text-pink-400" />
+              <div className="flex items-center text-sm text-muted-foreground">
+                <Clock className="h-4 w-4 mr-1 text-blue-600" />
                 <span>报名截止: {exam.deadline}</span>
               </div>
 
@@ -305,7 +315,7 @@ export function Exams() {
               {exam.tags && exam.tags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-2">
                   {exam.tags.map((tag, index) => (
-                    <Badge key={index} variant="outline" className="text-xs py-0 border-gray-700 text-gray-300">
+                    <Badge key={index} variant="outline" className="text-xs py-0 border-border text-muted-foreground">
                       {tag}
                     </Badge>
                   ))}
@@ -318,7 +328,7 @@ export function Exams() {
           <div className="mt-3">
             <Button
               variant="outline"
-              className="w-full text-sm bg-gray-800 border-gray-700 text-white hover:bg-purple-900 hover:text-white"
+              className="w-full text-sm bg-muted border-border text-foreground hover:bg-primary hover:text-primary-foreground"
               onClick={(e) => {
                 e.stopPropagation()
                 handleClick()
@@ -339,7 +349,7 @@ export function Exams() {
     return (
       <div className="mb-8">
         <h2
-          className="text-xl font-semibold text-white mb-4 flex items-center justify-between cursor-pointer"
+          className="text-xl font-semibold text-foreground mb-4 flex items-center justify-between cursor-pointer"
           onClick={() => toggleSection("featured")}
         >
           <span>推荐认证</span>
@@ -354,68 +364,121 @@ export function Exams() {
     )
   }
 
+  const sidebarItems = [
+    {
+      id: "featured",
+      label: "推荐认证",
+      icon: <Trophy className="h-5 w-5" />,
+      count: [...mockExams, ...certificateExams, ...competitions].filter((exam) => exam.featured).length,
+    },
+    {
+      id: "mock",
+      label: "技能评估",
+      icon: <ShoppingBag className="h-5 w-5" />,
+      count: mockExams.length,
+    },
+    {
+      id: "certificate",
+      label: "专业认证",
+      icon: <Certificate className="h-5 w-5" />,
+      count: certificateExams.length,
+    },
+    {
+      id: "competition",
+      label: "创作大赛",
+      icon: <Trophy className="h-5 w-5" />,
+      count: competitions.length,
+    },
+  ]
+
+  const renderActiveContent = () => {
+    let examsToShow = []
+
+    switch (activeSection) {
+      case "featured":
+        examsToShow = [...mockExams, ...certificateExams, ...competitions].filter((exam) => exam.featured)
+        break
+      case "mock":
+        examsToShow = filteredMockExams
+        break
+      case "certificate":
+        examsToShow = filteredCertificateExams
+        break
+      case "competition":
+        examsToShow = filteredCompetitions
+        break
+      default:
+        examsToShow = []
+    }
+
+    return <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">{examsToShow.map(renderExamCard)}</div>
+  }
+
   return (
-    <div className="p-4 bg-black min-h-screen">
-      {/* 搜索框 */}
-      <div className="mb-6">
-        <input
-          type="text"
-          placeholder="搜索认证、考试或赛事..."
-          className="w-full p-3 rounded-lg bg-gray-900 text-white border border-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+    <div className="flex h-screen bg-background text-foreground">
+      <div className="w-64 bg-card border-r border-border flex flex-col">
+        {/* Sidebar header */}
+        <div className="p-4 border-b border-border">
+          <h2 className="text-lg font-semibold text-foreground">考测中心</h2>
+        </div>
+
+        {/* Sidebar navigation */}
+        <div className="flex-1 p-4">
+          <div className="space-y-2">
+            {sidebarItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => setActiveSection(item.id)}
+                className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-colors ${
+                  activeSection === item.id
+                    ? "bg-blue-600 text-white"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                }`}
+              >
+                <div className="flex items-center">
+                  {item.icon}
+                  <span className="ml-3 font-medium">{item.label}</span>
+                </div>
+                <Badge
+                  variant="secondary"
+                  className={`text-xs ${
+                    activeSection === item.id ? "bg-blue-700 text-white" : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {item.count}
+                </Badge>
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* 推荐考试 */}
-      {renderFeaturedExams()}
-
-      {/* 模拟考试 */}
-      <div className="mb-8">
-        <h2
-          className="text-xl font-semibold text-white mb-4 flex items-center justify-between cursor-pointer"
-          onClick={() => toggleSection("mock")}
-        >
-          <span>技能评估</span>
-          <span className="text-sm">{collapsedSections.mock ? "展开 ▼" : "收起 ▲"}</span>
-        </h2>
-        {!collapsedSections.mock && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredMockExams.map(renderExamCard)}
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <div className="p-4 border-b border-border">
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-xl font-semibold text-foreground">
+              {sidebarItems.find((item) => item.id === activeSection)?.label}
+            </h1>
+            <div className="relative w-80">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder="搜索认证、考试或赛事..."
+                className="w-full pl-10 pr-4 py-2 bg-muted border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
-        )}
-      </div>
 
-      {/* 证书考试 */}
-      <div className="mb-8">
-        <h2
-          className="text-xl font-semibold text-white mb-4 flex items-center justify-between cursor-pointer"
-          onClick={() => toggleSection("certificate")}
-        >
-          <span>专业认证</span>
-          <span className="text-sm">{collapsedSections.certificate ? "展开 ▼" : "收起 ▲"}</span>
-        </h2>
-        {!collapsedSections.certificate && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCertificateExams.map(renderExamCard)}
+          <div className="text-sm text-muted-foreground">
+            共 {sidebarItems.find((item) => item.id === activeSection)?.count} 项
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* 竞赛活动 */}
-      <div className="mb-8">
-        <h2
-          className="text-xl font-semibold text-white mb-4 flex items-center justify-between cursor-pointer"
-          onClick={() => toggleSection("competition")}
-        >
-          <span>创作大赛</span>
-          <span className="text-sm">{collapsedSections.competition ? "展开 ▼" : "收起 ▲"}</span>
-        </h2>
-        {!collapsedSections.competition && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredCompetitions.map(renderExamCard)}
-          </div>
-        )}
+        {/* Content area */}
+        <div className="flex-1 p-4 overflow-y-auto">{renderActiveContent()}</div>
       </div>
     </div>
   )

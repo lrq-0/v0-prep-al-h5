@@ -3,13 +3,16 @@
 import { ArrowLeft, Clock, FileText, AlertTriangle, MessageSquare, MessageCircle, Calendar, Award } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 
 // 证书考试介绍页面
 export default function CertificateExamIntro({ params }: { params: { id: string } }) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const returnUrl = searchParams.get("returnUrl") || "/"
 
   // 低空经济相关证书考试数据
   const certificateExams = {
@@ -121,14 +124,14 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href="/#exams" className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <Link href={returnUrl} className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">证书详情</h1>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">证书详情</h1>
       </div>
 
       {/* 证书封面 */}
@@ -149,14 +152,14 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
       </div>
 
       {/* 考试AI助手 */}
-      <div className="mx-4 mt-4 mb-2 p-3 bg-gray-900/60 border border-gray-800 rounded-lg">
+      <div className="mx-4 mt-4 mb-2 p-3 bg-card/60 border border-border rounded-lg">
         <div className="flex items-center">
           <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center mr-3 flex-shrink-0">
             <MessageSquare className="h-4 w-4 text-white" />
           </div>
           <div className="flex-1">
             <div className="flex items-center justify-between">
-              <h3 className="font-medium text-white">考试助手</h3>
+              <h3 className="font-medium text-foreground">考试助手</h3>
               <Button
                 onClick={() =>
                   router.push(`/ai-chat/exam-assistant?examId=${params.id}&returnUrl=/exams/${params.id}/certificate`)
@@ -169,7 +172,7 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
                 咨询
               </Button>
             </div>
-            <p className="text-xs text-gray-400 mt-0.5">有任何关于本次证书考试的问题，都可以向我咨询</p>
+            <p className="text-xs text-muted-foreground mt-0.5">有任何关于本次证书考试的问题，都可以向我咨询</p>
           </div>
         </div>
       </div>
@@ -177,53 +180,53 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
       <div className="p-4 pb-24">
         {/* 考试基本信息 */}
         <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="p-3 bg-gray-900 border border-gray-800 rounded-lg">
+          <div className="p-3 bg-card border border-border rounded-lg">
             <div className="flex items-center mb-1">
               <Calendar className="h-4 w-4 text-green-400 mr-1" />
-              <div className="text-xs text-gray-400">考试日期</div>
+              <div className="text-xs text-muted-foreground">考试日期</div>
             </div>
-            <div className="text-sm font-medium text-white">{exam.date}</div>
+            <div className="text-sm font-medium text-foreground">{exam.date}</div>
           </div>
-          <div className="p-3 bg-gray-900 border border-gray-800 rounded-lg">
+          <div className="p-3 bg-card border border-border rounded-lg">
             <div className="flex items-center mb-1">
               <Clock className="h-4 w-4 text-red-400 mr-1" />
-              <div className="text-xs text-gray-400">报名截止</div>
+              <div className="text-xs text-muted-foreground">报名截止</div>
             </div>
-            <div className="text-sm font-medium text-white">{exam.deadline}</div>
+            <div className="text-sm font-medium text-foreground">{exam.deadline}</div>
           </div>
-          <div className="p-3 bg-gray-900 border border-gray-800 rounded-lg">
+          <div className="p-3 bg-card border border-border rounded-lg">
             <div className="flex items-center mb-1">
               <FileText className="h-4 w-4 text-blue-400 mr-1" />
-              <div className="text-xs text-gray-400">考试形式</div>
+              <div className="text-xs text-muted-foreground">考试形式</div>
             </div>
-            <div className="text-sm font-medium text-white">{exam.examFormat}</div>
+            <div className="text-sm font-medium text-foreground">{exam.examFormat}</div>
           </div>
-          <div className="p-3 bg-gray-900 border border-gray-800 rounded-lg">
+          <div className="p-3 bg-card border border-border rounded-lg">
             <div className="flex items-center mb-1">
               <Award className="h-4 w-4 text-yellow-400 mr-1" />
-              <div className="text-xs text-gray-400">发证时间</div>
+              <div className="text-xs text-muted-foreground">发证时间</div>
             </div>
-            <div className="text-sm font-medium text-white">{exam.certIssueTime}</div>
+            <div className="text-sm font-medium text-foreground">{exam.certIssueTime}</div>
           </div>
         </div>
 
         {/* 证书介绍 */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3">证书介绍</h2>
-          <div className="p-4 bg-gray-900 border border-gray-800 rounded-lg">
-            <p className="text-sm text-gray-300 leading-relaxed">{exam.description}</p>
+          <h2 className="text-lg font-semibold text-foreground mb-3">证书介绍</h2>
+          <div className="p-4 bg-card border border-border rounded-lg">
+            <p className="text-sm text-muted-foreground leading-relaxed">{exam.description}</p>
           </div>
         </div>
 
         {/* 报考条件 */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3">报考条件</h2>
-          <div className="p-4 bg-gray-900 border border-gray-800 rounded-lg">
+          <h2 className="text-lg font-semibold text-foreground mb-3">报考条件</h2>
+          <div className="p-4 bg-card border border-border rounded-lg">
             <ul className="space-y-2">
               {exam.requirements.map((item, index) => (
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 mr-2"></span>
-                  <span className="text-sm text-gray-300">{item}</span>
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </li>
               ))}
             </ul>
@@ -232,13 +235,13 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
 
         {/* 考试内容 */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3">考试内容</h2>
-          <div className="p-4 bg-gray-900 border border-gray-800 rounded-lg">
+          <h2 className="text-lg font-semibold text-foreground mb-3">考试内容</h2>
+          <div className="p-4 bg-card border border-border rounded-lg">
             <ul className="space-y-2">
               {exam.syllabus.map((item, index) => (
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 mr-2"></span>
-                  <span className="text-sm text-gray-300">{item}</span>
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </li>
               ))}
             </ul>
@@ -247,13 +250,13 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
 
         {/* 证书价值 */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3">证书价值</h2>
-          <div className="p-4 bg-gray-900 border border-gray-800 rounded-lg">
+          <h2 className="text-lg font-semibold text-foreground mb-3">证书价值</h2>
+          <div className="p-4 bg-card border border-border rounded-lg">
             <ul className="space-y-2">
               {exam.benefits.map((item, index) => (
                 <li key={index} className="flex items-start">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 mr-2"></span>
-                  <span className="text-sm text-gray-300">{item}</span>
+                  <span className="text-sm text-muted-foreground">{item}</span>
                 </li>
               ))}
             </ul>
@@ -262,15 +265,15 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
 
         {/* 证书信息 */}
         <div className="mb-6">
-          <h2 className="text-lg font-semibold text-white mb-3">证书信息</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-3">证书信息</h2>
           <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 bg-gray-900 border border-gray-800 rounded-lg">
-              <div className="text-sm text-gray-300">证书级别</div>
-              <div className="text-sm font-medium text-white">{exam.level}</div>
+            <div className="flex items-center justify-between p-3 bg-card border border-border rounded-lg">
+              <div className="text-sm text-muted-foreground">证书级别</div>
+              <div className="text-sm font-medium text-foreground">{exam.level}</div>
             </div>
-            <div className="flex items-center justify-between p-3 bg-gray-900 border border-gray-800 rounded-lg">
-              <div className="text-sm text-gray-300">证书有效期</div>
-              <div className="text-sm font-medium text-white">{exam.validity}</div>
+            <div className="flex items-center justify-between p-3 bg-card border border-border rounded-lg">
+              <div className="text-sm text-muted-foreground">证书有效期</div>
+              <div className="text-sm font-medium text-foreground">{exam.validity}</div>
             </div>
           </div>
         </div>
@@ -280,8 +283,8 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
           <div className="flex items-start">
             <AlertTriangle className="h-5 w-5 text-red-400 mr-2 mt-0.5" />
             <div>
-              <h3 className="font-medium text-white mb-1">考试须知</h3>
-              <p className="text-sm text-gray-300">
+              <h3 className="font-medium text-foreground mb-1">考试须知</h3>
+              <p className="text-sm text-muted-foreground">
                 请考生务必携带有效身份证件参加考试。考试前请仔细阅读考场规则，遵守考试纪律。对于有实操考核部分的考试，请提前熟悉考试设备和操作流程。证书将在考试成绩公布后按规定时间发放。
               </p>
             </div>
@@ -290,13 +293,13 @@ export default function CertificateExamIntro({ params }: { params: { id: string 
       </div>
 
       {/* 底部报名按钮 */}
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-gray-900/95 backdrop-blur-md border-t border-gray-800">
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-card/95 backdrop-blur-md border-t border-border">
         <div className="flex justify-between items-center mb-2">
           <div>
-            <div className="text-xs text-gray-400">报名费用</div>
-            <div className="text-lg font-bold text-white">¥{exam.price}</div>
+            <div className="text-xs text-muted-foreground">报名费用</div>
+            <div className="text-lg font-bold text-foreground">¥{exam.price}</div>
           </div>
-          <div className="text-xs text-gray-400">
+          <div className="text-xs text-muted-foreground">
             报名截止：<span className="text-red-400">{exam.deadline}</span>
           </div>
         </div>

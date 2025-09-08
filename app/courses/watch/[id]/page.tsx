@@ -83,7 +83,7 @@ export default function WatchCourse({ params }: { params: { id: string } }) {
       <div className="p-4 border-b border-gray-800">
         <h1 className="text-lg font-bold text-white mb-1">{lesson.title}</h1>
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-300">{lesson.instructor}</div>
+          <div className="text-sm text-white">{lesson.instructor}</div>
           <div className="text-sm text-gray-400">{lesson.duration}</div>
         </div>
       </div>
@@ -122,7 +122,11 @@ export default function WatchCourse({ params }: { params: { id: string } }) {
                     <div className="text-xs text-gray-400">{material.size}</div>
                   </div>
                 </div>
-                <Button variant="outline" size="sm" className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent"
+                >
                   下载
                 </Button>
               </div>

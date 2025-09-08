@@ -19,11 +19,29 @@ import {
   LineChart,
   AlertTriangle,
   BadgeCheck,
+  Sun,
+  Moon,
 } from "lucide-react"
 import { Card } from "@/components/ui/card"
 
 export default function SuperAdminPage() {
   const [activeTab, setActiveTab] = useState("dashboard")
+  const [isDarkMode, setIsDarkMode] = useState(true)
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode)
+  }
+
+  const themeClasses = {
+    container: isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900",
+    card: isDarkMode ? "bg-gray-800" : "bg-white border border-gray-200",
+    cardSecondary: isDarkMode ? "bg-gray-700 border-gray-600" : "bg-gray-50 border border-gray-200",
+    cardTertiary: isDarkMode ? "bg-gray-800" : "bg-white",
+    button: isDarkMode ? "hover:bg-gray-700" : "hover:bg-gray-100",
+    activeButton: isDarkMode ? "bg-gray-700" : "bg-gray-200",
+    text: isDarkMode ? "text-white" : "text-gray-900",
+    textSecondary: isDarkMode ? "text-gray-300" : "text-gray-600",
+  }
 
   const menuItems = [
     {
@@ -149,29 +167,47 @@ export default function SuperAdminPage() {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-gray-900 min-h-screen text-white">
+    <div className={`container mx-auto p-4 min-h-screen ${themeClasses.container}`}>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold flex items-center">
+        <h1 className={`text-2xl font-bold flex items-center ${themeClasses.text}`}>
           <Shield className="mr-2 h-6 w-6" />
           超级管理员控制台
         </h1>
+        <button
+          onClick={toggleTheme}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            isDarkMode ? "bg-gray-800 hover:bg-gray-700" : "bg-white hover:bg-gray-100 border border-gray-200"
+          }`}
+        >
+          {isDarkMode ? (
+            <>
+              <Sun className="w-4 h-4" />
+              <span className="text-sm">Light</span>
+            </>
+          ) : (
+            <>
+              <Moon className="w-4 h-4" />
+              <span className="text-sm">Dark</span>
+            </>
+          )}
+        </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {/* 左侧导航 */}
         <div className="md:col-span-1">
-          <div className="bg-gray-800 rounded-lg p-4">
+          <div className={`bg-gray-800 rounded-lg p-4 ${themeClasses.card}`}>
             <div className="space-y-2">
               {menuItems.map((item) => (
                 <button
                   key={item.id}
                   className={`flex items-center w-full p-3 rounded-lg transition-colors ${
-                    activeTab === item.id ? "bg-gray-700" : "hover:bg-gray-700"
+                    activeTab === item.id ? themeClasses.activeButton : themeClasses.button
                   }`}
                   onClick={() => setActiveTab(item.id)}
                 >
                   <div className={`p-2 rounded-md mr-3 ${item.color}`}>{item.icon}</div>
-                  <span className="font-medium">{item.label}</span>
+                  <span className={`font-medium ${themeClasses.text}`}>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -180,10 +216,10 @@ export default function SuperAdminPage() {
 
         {/* 右侧内容 */}
         <div className="md:col-span-3">
-          <div className="bg-gray-800 rounded-lg p-6">
+          <div className={`bg-gray-800 rounded-lg p-6 ${themeClasses.card}`}>
             {activeTab === "dashboard" && (
               <div>
-                <h2 className="text-xl font-bold mb-4">系统概览</h2>
+                <h2 className={`text-xl font-bold mb-4 ${themeClasses.text}`}>系统概览</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <Card className="bg-blue-900 border-blue-700 p-4">
                     <div className="flex items-center justify-between">
@@ -215,54 +251,54 @@ export default function SuperAdminPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="bg-gray-700 border-gray-600 p-4">
-                    <h3 className="font-medium text-gray-300 mb-3 flex items-center">
+                  <Card className={`p-4 ${themeClasses.cardSecondary}`}>
+                    <h3 className={`font-medium mb-3 flex items-center ${themeClasses.textSecondary}`}>
                       <AlertTriangle className="w-4 h-4 mr-2 text-amber-400" />
                       待处理事项
                     </h3>
                     <ul className="space-y-3">
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>待审核课程</span>
+                          <span className={themeClasses.text}>待审核课程</span>
                           <span className="bg-amber-800 text-amber-200 px-2 py-1 rounded text-xs">12 个</span>
                         </div>
                       </li>
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>待审核AI助手</span>
+                          <span className={themeClasses.text}>待审核AI助手</span>
                           <span className="bg-amber-800 text-amber-200 px-2 py-1 rounded text-xs">8 个</span>
                         </div>
                       </li>
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>待处理退费申请</span>
+                          <span className={themeClasses.text}>待处理退费申请</span>
                           <span className="bg-amber-800 text-amber-200 px-2 py-1 rounded text-xs">5 个</span>
                         </div>
                       </li>
                     </ul>
                   </Card>
 
-                  <Card className="bg-gray-700 border-gray-600 p-4">
-                    <h3 className="font-medium text-gray-300 mb-3 flex items-center">
+                  <Card className={`p-4 ${themeClasses.cardSecondary}`}>
+                    <h3 className={`font-medium mb-3 flex items-center ${themeClasses.textSecondary}`}>
                       <BarChart3 className="w-4 h-4 mr-2 text-blue-400" />
                       系统状态
                     </h3>
                     <ul className="space-y-3">
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>服务器负载</span>
+                          <span className={themeClasses.text}>服务器负载</span>
                           <span className="bg-green-800 text-green-200 px-2 py-1 rounded text-xs">正常</span>
                         </div>
                       </li>
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>数据库状态</span>
+                          <span className={themeClasses.text}>数据库状态</span>
                           <span className="bg-green-800 text-green-200 px-2 py-1 rounded text-xs">正常</span>
                         </div>
                       </li>
-                      <li className="bg-gray-800 p-3 rounded-md">
+                      <li className={`p-3 rounded-md ${themeClasses.cardTertiary}`}>
                         <div className="flex justify-between items-center">
-                          <span>AI模型服务</span>
+                          <span className={themeClasses.text}>AI模型服务</span>
                           <span className="bg-green-800 text-green-200 px-2 py-1 rounded text-xs">正常</span>
                         </div>
                       </li>
@@ -274,14 +310,18 @@ export default function SuperAdminPage() {
 
             {activeTab !== "dashboard" && subMenus[activeTab] && (
               <div>
-                <h2 className="text-xl font-bold mb-4">{menuItems.find((item) => item.id === activeTab)?.label}</h2>
+                <h2 className={`text-xl font-bold mb-4 ${themeClasses.text}`}>
+                  {menuItems.find((item) => item.id === activeTab)?.label}
+                </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {subMenus[activeTab].map((subItem) => (
                     <Link href={subItem.href} key={subItem.id}>
-                      <Card className="bg-gray-700 border-gray-600 p-4 hover:bg-gray-600 transition-colors cursor-pointer">
+                      <Card
+                        className={`p-4 transition-colors cursor-pointer ${themeClasses.cardSecondary} ${themeClasses.button}`}
+                      >
                         <div className="flex items-center">
-                          <div className="bg-gray-800 p-2 rounded-md mr-3">{subItem.icon}</div>
-                          <span className="font-medium">{subItem.label}</span>
+                          <div className={`p-2 rounded-md mr-3 ${themeClasses.cardTertiary}`}>{subItem.icon}</div>
+                          <span className={`font-medium ${themeClasses.text}`}>{subItem.label}</span>
                         </div>
                       </Card>
                     </Link>

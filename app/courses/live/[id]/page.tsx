@@ -78,7 +78,10 @@ export default function LiveCourse({ params }: { params: { id: string } }) {
       <div className="p-4 border-b border-gray-800">
         <h1 className="text-lg font-bold text-white mb-1">{liveCourse.title}</h1>
         <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-300">{liveCourse.instructor}</div>
+          <div className="text-sm text-gray-300">
+            <span className="text-white font-medium">讲师：</span>
+            {liveCourse.instructor}
+          </div>
         </div>
       </div>
 
@@ -102,7 +105,7 @@ export default function LiveCourse({ params }: { params: { id: string } }) {
                   <span className={`text-sm font-medium ${chat.isInstructor ? "text-blue-400" : "text-white"}`}>
                     {chat.user}
                     {chat.isInstructor && (
-                      <span className="ml-1 text-xs px-1 py-0.5 rounded bg-blue-500/20 text-blue-400">讲师</span>
+                      <span className="ml-1 text-xs px-1 py-0.5 rounded bg-blue-600 text-white">讲师</span>
                     )}
                   </span>
                   <span className="text-xs text-gray-500 ml-2">{chat.time}</span>

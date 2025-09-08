@@ -87,19 +87,19 @@ export default function MyGrades() {
   ]
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href="/" className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <Link href="/" className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">我的成绩</h1>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">我的成绩</h1>
       </div>
 
       <div className="p-4 pb-16">
         <Tabs defaultValue="exams" className="w-full">
-          <TabsList className="w-full grid grid-cols-2 bg-gray-900 border-b border-gray-800 rounded-none h-12 mb-4">
+          <TabsList className="w-full grid grid-cols-2 bg-card border-b border-border rounded-none h-12 mb-4">
             <TabsTrigger value="exams" className="data-[state=active]:text-blue-400">
               考试成绩
             </TabsTrigger>
@@ -111,19 +111,19 @@ export default function MyGrades() {
           <TabsContent value="exams">
             <div className="space-y-3">
               {examResults.map((exam) => (
-                <Card key={exam.id} className="p-4 bg-gray-900 border-gray-800">
+                <Card key={exam.id} className="p-4 bg-card border-border">
                   <div className="flex justify-between items-start mb-3">
-                    <h3 className="font-medium text-white">{exam.title}</h3>
+                    <h3 className="font-medium text-foreground">{exam.title}</h3>
                     <div className="flex items-center">
                       <span className="text-lg font-bold text-blue-400">{exam.score}</span>
-                      <span className="text-sm text-gray-400">/{exam.totalScore}</span>
+                      <span className="text-sm text-muted-foreground">/{exam.totalScore}</span>
                     </div>
                   </div>
-                  <div className="flex justify-between text-xs text-gray-400 mb-3">
+                  <div className="flex justify-between text-xs text-muted-foreground mb-3">
                     <span>考试日期: {exam.date}</span>
                     <span>用时: {exam.duration}</span>
                   </div>
-                  <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden mb-3">
+                  <div className="w-full h-2 bg-border rounded-full overflow-hidden mb-3">
                     <div
                       className="h-full bg-blue-500"
                       style={{ width: `${(exam.score / exam.totalScore) * 100}%` }}
@@ -134,7 +134,7 @@ export default function MyGrades() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+                        className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent"
                       >
                         查看详情
                       </Button>
@@ -148,7 +148,7 @@ export default function MyGrades() {
           <TabsContent value="certificates">
             <div className="space-y-3">
               {certificates.map((certificate) => (
-                <Card key={certificate.id} className="p-4 bg-gray-900 border-gray-800">
+                <Card key={certificate.id} className="p-4 bg-card border-border">
                   <div className="flex">
                     <div className="relative w-16 h-16 mr-3 rounded-md overflow-hidden">
                       <Image
@@ -159,20 +159,20 @@ export default function MyGrades() {
                       />
                     </div>
                     <div className="flex-1">
-                      <div className="flex justifyy-between items-start mb-2">
-                        <h3 className="font-medium text-white">{certificate.title}</h3>
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-medium text-foreground">{certificate.title}</h3>
                         <span className="text-xs px-2 py-0.5 rounded-full bg-blue-900/30 text-blue-400 border border-blue-500/30">
                           {certificate.level}
                         </span>
                       </div>
-                      <div className="flex text-xs text-gray-400 mb-2">
+                      <div className="flex text-xs text-muted-foreground mb-2">
                         <div className="mr-4">颁发机构: {certificate.issuer}</div>
                         <div>颁发日期: {certificate.date}</div>
                       </div>
                       <div className="flex justify-between items-center">
                         {certificate.score !== null ? (
                           <div className="flex items-center">
-                            <span className="font-medium text-white">{certificate.score}分</span>
+                            <span className="font-medium text-foreground">{certificate.score}分</span>
                           </div>
                         ) : (
                           <div></div>
@@ -181,7 +181,7 @@ export default function MyGrades() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20"
+                            className="border-blue-500/30 text-blue-400 hover:bg-blue-500/20 bg-transparent"
                           >
                             查看证书
                           </Button>

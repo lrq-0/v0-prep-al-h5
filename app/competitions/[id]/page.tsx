@@ -109,34 +109,34 @@ export default function CompetitionDetail({ params }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black text-white p-4">
-        <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10 mb-6">
-          <Link href="/" className="flex items-center text-gray-300">
+      <div className="min-h-screen bg-background text-foreground p-4">
+        <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10 mb-6">
+          <Link href="/" className="flex items-center text-muted-foreground">
             <ArrowLeft className="h-5 w-5 mr-2" />
             <span>返回</span>
           </Link>
-          <h1 className="flex-1 text-center text-lg font-semibold text-white">赛事详情</h1>
+          <h1 className="flex-1 text-center text-lg font-semibold text-foreground">赛事详情</h1>
         </div>
 
         <div className="flex flex-col items-center justify-center py-12">
           <div className="animate-spin h-8 w-8 border-2 border-blue-500 rounded-full border-t-transparent"></div>
-          <p className="mt-4 text-gray-400">正在加载赛事信息...</p>
+          <p className="mt-4 text-muted-foreground">正在加载赛事信息...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href="/" className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <Link href="/" className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
         </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">赛事详情</h1>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">赛事详情</h1>
         <Button variant="ghost" size="icon">
-          <Share2 className="h-5 w-5 text-gray-300" />
+          <Share2 className="h-5 w-5 text-muted-foreground" />
         </Button>
       </div>
 
@@ -156,10 +156,10 @@ export default function CompetitionDetail({ params }) {
 
       {/* 赛事信息卡片 */}
       <div className="p-4">
-        <Card className="bg-gray-900 border-gray-800 text-white mb-6">
+        <Card className="bg-card border-border text-foreground mb-6">
           <CardContent className="p-4 space-y-3">
             <div className="flex items-center justify-between">
-              <div className="flex items-center text-gray-300">
+              <div className="flex items-center text-muted-foreground">
                 <Calendar className="h-5 w-5 mr-2 text-blue-400" />
                 <span>比赛日期: {competition.date}</span>
               </div>
@@ -168,34 +168,34 @@ export default function CompetitionDetail({ params }) {
               </Badge>
             </div>
 
-            <div className="flex items-center text-gray-300">
+            <div className="flex items-center text-muted-foreground">
               <Clock className="h-5 w-5 mr-2 text-red-400" />
               <span>报名截止: {competition.deadline}</span>
             </div>
 
-            <div className="flex items-center text-gray-300">
+            <div className="flex items-center text-muted-foreground">
               <MapPin className="h-5 w-5 mr-2 text-green-400" />
               <span>比赛地点: {competition.location}</span>
             </div>
 
-            <div className="flex items-center text-gray-300">
+            <div className="flex items-center text-muted-foreground">
               <Users className="h-5 w-5 mr-2 text-yellow-400" />
               <span>参赛对象: {competition.participants}</span>
             </div>
 
-            <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-800">
+            <div className="flex justify-between items-center mt-4 pt-4 border-t border-border">
               <div>
-                <p className="text-sm text-gray-400">报名费用</p>
-                <p className="text-xl font-semibold text-white">
+                <p className="text-sm text-muted-foreground">报名费用</p>
+                <p className="text-xl font-semibold text-foreground">
                   {competition.price > 0 ? `¥${competition.price}` : "免费"}
                 </p>
               </div>
 
               <div>
-                <p className="text-sm text-gray-400">已报名/总名额</p>
+                <p className="text-sm text-muted-foreground">已报名/总名额</p>
                 <p className="text-right">
                   <span className="text-blue-400 font-semibold">{competition.currentParticipants}</span>
-                  <span className="text-gray-400">/{competition.maxParticipants}</span>
+                  <span className="text-muted-foreground">/{competition.maxParticipants}</span>
                 </p>
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function CompetitionDetail({ params }) {
 
         {/* 赛事详情标签页 */}
         <Tabs defaultValue="details" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 bg-gray-900 mb-6">
+          <TabsList className="grid w-full grid-cols-4 bg-card mb-6">
             <TabsTrigger value="details">详情</TabsTrigger>
             <TabsTrigger value="schedule">日程</TabsTrigger>
             <TabsTrigger value="awards">奖项</TabsTrigger>
@@ -212,12 +212,12 @@ export default function CompetitionDetail({ params }) {
           </TabsList>
 
           <TabsContent value="details" className="space-y-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <span className="w-1 h-5 bg-blue-500 rounded mr-2"></span>
                 赛事规则
               </h2>
-              <ul className="space-y-2 text-gray-300">
+              <ul className="space-y-2 text-muted-foreground">
                 {competition.rules.map((rule, index) => (
                   <li key={index} className="flex items-start">
                     <span className="inline-flex items-center justify-center bg-blue-900/50 text-blue-400 rounded-full h-5 w-5 text-xs mr-2 mt-0.5">
@@ -229,32 +229,35 @@ export default function CompetitionDetail({ params }) {
               </ul>
             </div>
 
-            <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <span className="w-1 h-5 bg-blue-500 rounded mr-2"></span>
                 赛事详情
               </h2>
-              <div className="text-gray-300 space-y-4" dangerouslySetInnerHTML={{ __html: competition.content }} />
+              <div
+                className="text-muted-foreground space-y-4"
+                dangerouslySetInnerHTML={{ __html: competition.content }}
+              />
             </div>
           </TabsContent>
 
           <TabsContent value="schedule" className="space-y-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <span className="w-1 h-5 bg-blue-500 rounded mr-2"></span>
                 赛事日程
               </h2>
               <div className="relative">
-                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gray-700"></div>
+                <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-border"></div>
                 <ul className="space-y-6">
                   {competition.schedule.map((item, index) => (
                     <li key={index} className="relative pl-10">
-                      <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-blue-900 border-4 border-gray-900 flex items-center justify-center">
+                      <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-blue-900 border-4 border-card flex items-center justify-center">
                         <span className="text-xs text-blue-400">{index + 1}</span>
                       </div>
-                      <div className="bg-gray-800 rounded-lg p-3">
+                      <div className="bg-muted rounded-lg p-3">
                         <p className="text-blue-400 font-medium">{item.date}</p>
-                        <p className="text-white">{item.event}</p>
+                        <p className="text-foreground">{item.event}</p>
                       </div>
                     </li>
                   ))}
@@ -264,7 +267,7 @@ export default function CompetitionDetail({ params }) {
           </TabsContent>
 
           <TabsContent value="awards" className="space-y-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <span className="w-1 h-5 bg-blue-500 rounded mr-2"></span>
                 奖项设置
@@ -286,7 +289,7 @@ export default function CompetitionDetail({ params }) {
                       />
                     </div>
                     <div>
-                      <p className="text-white">{award}</p>
+                      <p className="text-foreground">{award}</p>
                     </div>
                   </li>
                 ))}
@@ -295,16 +298,16 @@ export default function CompetitionDetail({ params }) {
           </TabsContent>
 
           <TabsContent value="faqs" className="space-y-4">
-            <div className="bg-gray-900 border border-gray-800 rounded-lg p-4">
+            <div className="bg-card border border-border rounded-lg p-4">
               <h2 className="text-lg font-semibold mb-4 flex items-center">
                 <span className="w-1 h-5 bg-blue-500 rounded mr-2"></span>
                 常见问题
               </h2>
               <div className="space-y-4">
                 {competition.faqs.map((faq, index) => (
-                  <div key={index} className="bg-gray-800 rounded-lg p-4">
+                  <div key={index} className="bg-muted rounded-lg p-4">
                     <h3 className="text-blue-400 font-medium mb-2">Q: {faq.question}</h3>
-                    <p className="text-gray-300">A: {faq.answer}</p>
+                    <p className="text-muted-foreground">A: {faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -314,10 +317,10 @@ export default function CompetitionDetail({ params }) {
       </div>
 
       {/* 底部报名按钮 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gray-900/80 backdrop-blur-md border-t border-gray-800 p-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-card/80 backdrop-blur-md border-t border-border p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="text-white">
-            <p className="text-sm text-gray-400">报名费用</p>
+          <div className="text-foreground">
+            <p className="text-sm text-muted-foreground">报名费用</p>
             <span className="text-lg font-semibold">{competition.price > 0 ? `¥${competition.price}` : "免费"}</span>
           </div>
           <Button size="lg" onClick={handleRegister}>

@@ -1,12 +1,27 @@
+"use client"
+
 import { ArrowLeft, Clock, Users, Share2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { MessageCircle } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
 
 // 课程详情页 - 未购买的课程
 export default function CourseDetail({ params }: { params: { id: string } }) {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const handleBack = () => {
+    const returnUrl = searchParams.get("returnUrl")
+    if (returnUrl) {
+      router.push(returnUrl)
+    } else {
+      router.push("/")
+    }
+  }
+
   // 电商、短视频、自媒体相关课程数据
   const coursesData = {
     "1": {
@@ -127,15 +142,15 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
   const course = coursesData[params.id as keyof typeof coursesData] || coursesData["1"]
 
   return (
-    <div className="pb-20 min-h-screen bg-black text-white">
+    <div className="pb-20 min-h-screen bg-background text-foreground">
       {/* 顶部导航栏 */}
-      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-gray-900/80 backdrop-blur-md border-b border-gray-800 z-10">
-        <Link href="/#courses" className="flex items-center text-gray-300">
+      <div className="sticky top-0 left-0 right-0 h-14 flex items-center px-4 bg-card/80 backdrop-blur-md border-b border-border z-10">
+        <button onClick={handleBack} className="flex items-center text-muted-foreground">
           <ArrowLeft className="h-5 w-5 mr-2" />
           <span>返回</span>
-        </Link>
-        <h1 className="flex-1 text-center text-lg font-semibold text-white">课程详情</h1>
-        <button className="text-gray-300">
+        </button>
+        <h1 className="flex-1 text-center text-lg font-semibold text-foreground">课程详情</h1>
+        <button className="text-muted-foreground">
           <Share2 className="h-5 w-5" />
         </button>
       </div>
@@ -148,27 +163,27 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
           fill
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
       </div>
 
       {/* 课程信息 */}
       <div className="px-4 pt-2 pb-4">
-        <h1 className="text-xl font-bold text-white mb-2">{course.title}</h1>
+        <h1 className="text-xl font-bold text-foreground mb-2">{course.title}</h1>
         <div className="flex items-center justify-between mb-2">
-          <div className="text-sm text-gray-300">{course.instructor}</div>
-          <div className="flex items-center text-xs text-gray-400">
+          <div className="text-sm text-muted-foreground">{course.instructor}</div>
+          <div className="flex items-center text-xs text-muted-foreground">
             <Users className="h-3 w-3 mr-1" />
             <span>{course.purchaseCount}人已学</span>
           </div>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <span className="text-purple-400 text-xl font-bold">{course.price}</span>
+            <span className="text-blue-600 text-xl font-bold">{course.price}</span>
             {course.originalPrice && (
-              <span className="ml-2 text-gray-500 text-sm line-through">{course.originalPrice}</span>
+              <span className="ml-2 text-muted-foreground text-sm line-through">{course.originalPrice}</span>
             )}
           </div>
-          <div className="flex items-center text-xs text-gray-400">
+          <div className="flex items-center text-xs text-muted-foreground">
             <Clock className="h-3 w-3 mr-1" />
             <span>{course.duration}</span>
           </div>
@@ -178,38 +193,38 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
       {/* 课程AI助手 */}
       <div className="px-4 mb-4">
         <Link href={`/ai-chat/course-assistant?courseId=${course.id}&returnUrl=/courses/${course.id}`}>
-          <div className="p-3 bg-gray-900/60 border border-gray-800 rounded-lg hover:bg-gray-800/60 transition-colors">
+          <div className="p-3 bg-card border border-border rounded-lg hover:bg-card/80 transition-colors">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center mr-3 flex-shrink-0">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center mr-3 flex-shrink-0">
                 <MessageCircle className="h-4 w-4 text-white" />
               </div>
-              <div className="flex-1">
-                <h3 className="font-medium text-white">课程助手</h3>
-                <p className="text-xs text-gray-400 mt-0.5">有关{course.title}的问题，可随时咨询</p>
+              <div>
+                <h3 className="font-medium text-foreground">课程助手</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">有关{course.title}的问题，可随时咨询</p>
               </div>
             </div>
           </div>
         </Link>
       </div>
 
-      <div className="border-t border-gray-800"></div>
+      <div className="border-t border-border"></div>
 
       {/* 详情标签页 */}
       <Tabs defaultValue="intro" className="w-full">
-        <TabsList className="w-full grid grid-cols-3 bg-gray-900 border-b border-gray-800 rounded-none h-12">
-          <TabsTrigger value="intro" className="data-[state=active]:text-purple-400">
+        <TabsList className="w-full grid grid-cols-3 bg-card border-b border-border rounded-none h-12">
+          <TabsTrigger value="intro" className="data-[state=active]:text-blue-600">
             课程介绍
           </TabsTrigger>
-          <TabsTrigger value="instructor" className="data-[state=active]:text-purple-400">
+          <TabsTrigger value="instructor" className="data-[state=active]:text-blue-600">
             师资介绍
           </TabsTrigger>
-          <TabsTrigger value="outline" className="data-[state=active]:text-purple-400">
+          <TabsTrigger value="outline" className="data-[state=active]:text-blue-600">
             课程目录
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="intro" className="p-4">
-          <p className="text-gray-300 text-sm leading-relaxed">{course.description}</p>
+          <p className="text-muted-foreground text-sm leading-relaxed">{course.description}</p>
         </TabsContent>
 
         <TabsContent value="instructor" className="p-4">
@@ -223,31 +238,31 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
               />
             </div>
             <div>
-              <h3 className="font-medium text-white">{course.instructorInfo.name}</h3>
-              <p className="text-xs text-purple-400">{course.instructorInfo.title}</p>
+              <h3 className="font-medium text-foreground">{course.instructorInfo.name}</h3>
+              <p className="text-xs text-blue-600">{course.instructorInfo.title}</p>
             </div>
           </div>
-          <p className="text-gray-300 text-sm leading-relaxed">{course.instructorInfo.experience}</p>
+          <p className="text-muted-foreground text-sm leading-relaxed">{course.instructorInfo.experience}</p>
         </TabsContent>
 
         <TabsContent value="outline" className="p-4">
           <div className="grid gap-3">
             {course.outlines.map((item) => (
-              <div key={item.id} className="p-3 bg-gray-900 border border-gray-800 rounded-lg">
+              <div key={item.id} className="p-3 bg-card border border-border rounded-lg">
                 <div className="flex justify-between items-center mb-1">
-                  <h3 className="font-medium text-white">{item.title}</h3>
+                  <h3 className="font-medium text-foreground">{item.title}</h3>
                   {item.free && (
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-900/30 text-green-400 border border-green-500/30">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-600 border border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-500/30">
                       免费
                     </span>
                   )}
                 </div>
                 <div className="flex justify-between items-center">
-                  <div className="text-xs text-gray-400">
+                  <div className="text-xs text-muted-foreground">
                     <Clock className="h-3 w-3 inline mr-1" />
                     {item.duration}
                   </div>
-                  <button className="text-xs text-purple-400">{item.free ? "免费预览" : "购买后学习"}</button>
+                  <button className="text-xs text-blue-600">{item.free ? "免费预览" : "购买后学习"}</button>
                 </div>
               </div>
             ))}
@@ -256,8 +271,8 @@ export default function CourseDetail({ params }: { params: { id: string } }) {
       </Tabs>
 
       {/* 底部购买按钮 */}
-      <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-900/95 backdrop-blur-md border-t border-gray-800">
-        <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-500 hover:to-purple-400">
+      <div className="fixed bottom-0 left-0 right-0 p-3 bg-card/95 backdrop-blur-md border-t border-border">
+        <Button className="w-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400">
           立即购买
         </Button>
       </div>
